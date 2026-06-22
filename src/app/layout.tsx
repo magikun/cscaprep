@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import { ScrollToTop } from "@/components/shared/scroll-to-top";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -30,7 +31,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${poppins.variable} ${instrumentSerif.variable} h-full antialiased`} style={{ fontFamily: "var(--font-poppins, 'Poppins', sans-serif)" }}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ScrollToTop />
+        {children}
+      </body>
     </html>
   );
 }

@@ -2,9 +2,9 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Typewriter } from "@/components/ui/typewriter";
+import { openWaitlist } from "@/lib/waitlist";
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 
@@ -129,19 +129,20 @@ export function CtaBanner() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: EASE_OUT_EXPO, delay: 0.35 }}
         >
-          <Link
-            href="/register"
+          <button
+            onClick={openWaitlist}
             className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] active:scale-[0.97]"
             style={{ background: "oklch(0.62 0.18 275)" }}
           >
-            Start Free <ArrowRight className="size-4" />
-          </Link>
-          <Link
+            Join Waitlist <ArrowRight className="size-4" />
+          </button>
+          <a
             href="#pricing"
-            className="liquid-glass inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-medium text-white transition-transform hover:scale-[1.03] active:scale-[0.97]"
+            onClick={(e) => { e.preventDefault(); document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" }); }}
+            className="liquid-glass inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-medium text-white transition-transform hover:scale-[1.03] active:scale-[0.97] cursor-pointer"
           >
             See Pricing
-          </Link>
+          </a>
         </motion.div>
 
         {/* Fine print */}

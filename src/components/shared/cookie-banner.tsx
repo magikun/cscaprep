@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import Link from "next/link";
 
 export function CookieBanner() {
@@ -8,7 +8,7 @@ export function CookieBanner() {
 
   useEffect(() => {
     const consent = localStorage.getItem("csca_consent");
-    if (!consent) setVisible(true);
+    if (!consent) startTransition(() => setVisible(true));
   }, []);
 
   const accept = () => {

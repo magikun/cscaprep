@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
+import { openWaitlist } from "@/lib/waitlist";
 import NumberFlow from "@number-flow/react";
 import { ArrowRight, TrendingUp, Zap } from "lucide-react";
 import { VerticalCutReveal } from "@/components/ui/vertical-cut-reveal";
@@ -167,14 +168,14 @@ function NoiseCTACard({ isInView }: { isInView: boolean }) {
 
       {/* CTA button */}
       <div className="relative z-10">
-        <Link
-          href="/register"
+        <button
+          onClick={openWaitlist}
           className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] active:scale-[0.97]"
           style={{ background: "oklch(0.62 0.18 275)" }}
         >
           Browse question bank
           <ArrowRight className="size-4" />
-        </Link>
+        </button>
       </div>
     </div>
   );

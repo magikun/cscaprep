@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { openWaitlist } from "@/lib/waitlist";
 
 const menuItems = [
   { name: "Home", href: "/", anchor: null },
@@ -57,13 +58,13 @@ export function Navbar() {
         </ul>
 
         {/* CTA */}
-        <Link
-          href="/register"
+        <button
+          onClick={openWaitlist}
           className="liquid-glass rounded-full px-6 py-2.5 text-sm text-white hover:scale-[1.03] transition-transform duration-200"
           style={{ fontFamily: "var(--font-poppins, 'Poppins', sans-serif)" }}
         >
           Begin Journey
-        </Link>
+        </button>
       </nav>
     </header>
   );

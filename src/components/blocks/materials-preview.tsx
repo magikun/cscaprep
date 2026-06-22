@@ -2,15 +2,15 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Lock, BookOpen, Shield, BarChart3, FileText, ClipboardCheck, Calculator } from "lucide-react";
+import { openWaitlist } from "@/lib/waitlist";
+import { Lock, BookMarked, Compass, Zap, Atom, Timer, Calculator } from "lucide-react";
 
 const materials = [
   {
     title: "CSCA Subject Guide",
     description: "Full coverage of all 4 tested subjects with examples",
-    icon: BookOpen,
+    icon: BookMarked,
     readTime: "45 min read",
     isPro: false,
     color: "#9B99FE",
@@ -18,7 +18,7 @@ const materials = [
   {
     title: "Exam Strategy",
     description: "How to approach each section and manage your time",
-    icon: Shield,
+    icon: Compass,
     readTime: "20 min read",
     isPro: false,
     color: "#2BC8B7",
@@ -26,7 +26,7 @@ const materials = [
   {
     title: "Practice Question Bank",
     description: "2,400+ questions across all subjects and difficulty levels",
-    icon: ClipboardCheck,
+    icon: Zap,
     readTime: "Practice",
     isPro: true,
     color: "#F28482",
@@ -34,7 +34,7 @@ const materials = [
   {
     title: "Physics & Chemistry Guide",
     description: "Core concepts, formulas, and worked examples",
-    icon: FileText,
+    icon: Atom,
     readTime: "60 min read",
     isPro: true,
     color: "#F5C344",
@@ -42,7 +42,7 @@ const materials = [
   {
     title: "Mock Exams",
     description: "Full 40-question timed simulations with scoring",
-    icon: BarChart3,
+    icon: Timer,
     readTime: "3 hr each",
     isPro: true,
     color: "#B567C2",
@@ -119,13 +119,10 @@ export function MaterialsPreview() {
               {/* Pro overlay */}
               {mat.isPro && (
                 <div className="absolute inset-0 rounded-2xl backdrop-blur-[2px] flex flex-col items-center justify-center gap-2">
-                  <div className="size-10 rounded-full bg-zinc-900/80 flex items-center justify-center">
-                    <Lock className="size-4 text-white" />
+                  <div className="size-10 rounded-full bg-white shadow-sm flex items-center justify-center">
+                    <Lock className="size-4 text-gray-900" />
                   </div>
-                  <span
-                    className="text-xs font-semibold px-2.5 py-0.5 rounded-full text-white"
-                    style={{ background: "linear-gradient(90deg, #9B99FE, #2BC8B7)" }}
-                  >
+                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-white text-gray-900 shadow-sm">
                     Pro Only
                   </span>
                 </div>
@@ -140,9 +137,7 @@ export function MaterialsPreview() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.7 }}
         >
-          <Button asChild>
-            <Link href="/register">Unlock All Materials — $9/mo</Link>
-          </Button>
+          <Button onClick={openWaitlist} className="bg-white text-gray-900 hover:bg-gray-100 border-0 shadow-sm" style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: "1rem" }}>Unlock All Materials — $9/mo</Button>
           <p className="text-xs mt-3" style={{ color: "rgba(255,255,255,0.35)" }}>First 2 materials free, forever</p>
         </motion.div>
       </div>

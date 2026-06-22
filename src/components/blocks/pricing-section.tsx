@@ -7,7 +7,7 @@ import { Check, ShieldCheck } from "lucide-react";
 import NumberFlow from "@number-flow/react";
 import { Sparkles } from "@/components/ui/sparkles";
 import { VerticalCutReveal } from "@/components/ui/vertical-cut-reveal";
-import Link from "next/link";
+import { openWaitlist } from "@/lib/waitlist";
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 
@@ -18,7 +18,6 @@ const plans = [
     price: 0,
     yearlyPrice: 0,
     buttonText: "Start Free",
-    href: "/register",
     popular: false,
     includes: [
       "What's included:",
@@ -34,7 +33,6 @@ const plans = [
     price: 9,
     yearlyPrice: 89,
     buttonText: "Get Pro Access",
-    href: "/register?plan=pro",
     popular: true,
     includes: [
       "Everything in Free, plus:",
@@ -150,8 +148,6 @@ export function PricingSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.55, ease: EASE_OUT_EXPO, delay: index * 0.12 }}
             whileHover={{ y: -4 }}
-            // @ts-ignore
-            transition={{ type: "spring", stiffness: 350, damping: 26 }}
           >
             <div
               className={cn(
@@ -204,8 +200,8 @@ export function PricingSection() {
                 </div>
 
                 {/* CTA */}
-                <Link
-                  href={plan.href}
+                <button
+                  onClick={openWaitlist}
                   className={cn(
                     "w-full mb-6 py-3.5 text-sm rounded-xl block text-center font-semibold transition-all duration-200",
                     plan.popular
@@ -214,7 +210,7 @@ export function PricingSection() {
                   )}
                 >
                   {plan.buttonText}
-                </Link>
+                </button>
 
                 {/* Feature list */}
                 <div className="space-y-3 pt-5 border-t border-white/[0.08] flex-1">
