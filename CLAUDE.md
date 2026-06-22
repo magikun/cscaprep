@@ -1,327 +1,438 @@
-# PrepCSCA — Design System
+# Genzy — Design System
 
 ## Product Context
-**CSCA = China Scholastic Competency Assessment** — a standardized test organized by the China Scholarship Council (CSC) and developed with Chinese university experts. It assesses international students' **language proficiency and academic readiness** for undergraduate studies in China.
 
-**Target audience**: International students (primarily from Africa, South/Southeast Asia, Middle East, Central Asia) aged 16–25, preparing to apply for Chinese university undergraduate programs or CSC scholarships. They are NOT IT auditors, compliance officers, or enterprise professionals.
+**Platform name: Genzy** (styled as `Genzy®` in Instrument Serif in the navbar)
 
-**CSCA subjects** (always use these — never audit/compliance domains):
+**CSCA = China Scholastic Competency Assessment** — a standardized test organized by the China Scholarship Council (CSC). It assesses international students' **language proficiency and academic readiness** for undergraduate studies in China.
+
+**Target audience**: International students (Africa, South/Southeast Asia, Middle East, Central Asia) aged 16–25, preparing for Chinese university applications or CSC scholarships. NOT IT auditors or enterprise professionals.
+
+**CSCA subjects tested** (always use these):
 1. Mathematics
 2. Physics
 3. Chemistry
 
-**Testimonial personas**: International students by nationality (e.g., "Amara O., Nigeria → Tsinghua University")
-**Social proof**: Country names of student origins (Nigeria, Indonesia, Pakistan, etc.) — NOT company names
+**Testimonial personas**: International students by nationality — e.g. "Amara O., Nigeria → Tsinghua University"
+**Social proof ticker**: Country names of student origins (Nigeria, Indonesia, Pakistan…) — NOT company logos
+
+---
 
 ## Tech Stack
-- Next.js 14 App Router + TypeScript
+
+- Next.js 16 App Router + TypeScript
 - Tailwind CSS v4 + shadcn/ui
-- Framer Motion for animations
+- Framer Motion (scroll reveals, float, number flow)
 - Supabase (auth + database)
 - Stripe (subscriptions)
+- `@number-flow/react` for animated number counters
 
-## Font
-- **Bricolage Grotesque** — headings (h1–h4), via `--font-bricolage` CSS variable
-- **Figtree** — body / UI text, via `--font-figtree` CSS variable
-- Both loaded from `next/font/google`; applied in `layout.tsx` via `.variable` class on `<html>`
-- `globals.css`: `--font-sans: var(--font-figtree)`, `--font-heading: var(--font-bricolage)`
-- Never use Inter, Geist, or system fonts
+---
 
-## Colors & Tokens (OKLCH)
+## Fonts
 
-| Token | OKLCH Value | Usage |
-|-------|-------------|-------|
-| Primary (brand purple) | `oklch(0.62 0.18 275)` | Accents, CTAs, active states, badges |
-| Background | `oklch(0.99 0.006 275)` | Page background — tinted near-white |
-| Foreground | `oklch(0.13 0.015 275)` | Body text |
-| Muted foreground | `oklch(0.52 0.012 275)` | Subtitles, descriptions |
-| Border | `oklch(0.91 0.01 275)` | Default borders |
-| Light lavender | `oklch(0.78 0.14 275)` | Number counters on dark backgrounds |
-| Dark section bg | `bg-zinc-950` | Stats, test preview |
-| Brand teal | `#2BC8B7` | Logo gradient end, avatar backgrounds |
-| Blue glow | `#3131f5` | Pricing section ellipse glow only |
+| Variable | Font | Usage |
+|---|---|---|
+| `--font-display` | **Instrument Serif** (weight 400) | All section h1/h2/h3 headings, navbar logo |
+| `--font-body` | **Inter** (weight 400, 500) | Body text, CTAs, subtext |
+| `--font-bricolage` | Bricolage Grotesque | Legacy — do not use on marketing pages |
+| `--font-figtree` | Figtree | Legacy — do not use on marketing pages |
 
 **Rules:**
-- Never use pure `#000` or `#fff` — always use OKLCH tokens
-- Never use gradient text (`background-clip: text` + gradient) — absolute ban
-- Never use `#9B99FE` hex directly in new code — use `oklch(0.62 0.18 275)` or `text-primary`
+- Section headings: `font-normal` + `fontFamily: "'Instrument Serif', serif"`
+- Body/UI text: `fontFamily: "var(--font-body, Inter, sans-serif)"`
+- Never use `font-semibold` or `font-bold` on Instrument Serif headings — weight 400 only
 
-## Absolute Bans
-1. **Gradient text** — `background-clip: text` + any gradient. Zero exceptions.
-2. **Side-stripe borders** — `border-left` or `border-right` > 1px as a colored accent on cards/alerts.
-3. **3-column equal-weight card grids** for feature sections (use zig-zag, asymmetric, or horizontal scroll instead).
-4. **Centered hero** — hero must be split-screen (55/45 or similar asymmetric grid).
-5. **Tech company logos** in social proof — CSCA audience is auditors/compliance. Use real org names (Deloitte, KPMG, EY, JPMorgan Chase, etc.) or text marquee.
+---
 
-## Layout Rules
-- Content max-width: `max-w-5xl` (text) · `max-w-7xl` (full-bleed)
-- Section padding: `py-20` standard · `py-24` for how-it-works/CTA · `py-28 lg:py-24` for hero
-- Horizontal padding: `px-6` consistently
-- Section content centered via `mx-auto`
-- Body text max-width: `max-w-[52ch]` to `max-w-[72ch]`
+## Color System (Dark Cinematic)
 
-## Navbar
-```
-Fixed, z-20, full width
-border-b border-dashed bg-white/90 backdrop-blur-md
-dark: bg-zinc-950/50 lg:bg-transparent
-Max width: max-w-5xl px-6
-Mobile hamburger: Menu ↔ X with rotate/scale/opacity transitions (200ms)
-Nav links: motion.span whileHover={{ y: -2 }} spring(400, 20)
-Auth buttons: outline "Login" + solid "Get Started"
-```
+The entire marketing site uses a dark navy palette. No light/white section backgrounds.
 
-## Hero Section (split screen — light)
-```
-min-h-[100dvh], bg-white, overflow-hidden
-Grid: lg:grid-cols-[55fr_45fr] gap-12 xl:gap-20, items-center
-Max width: max-w-7xl px-6
+| Token | Value | Usage |
+|---|---|---|
+| **Section background** | `#060f1a` | All section backgrounds (inline `style`) |
+| **Foreground (headings)** | `rgba(255,255,255,0.95)` | Section h2/h3 titles |
+| **Body text** | `rgba(255,255,255,0.5)` | Paragraphs, descriptions |
+| **Muted labels** | `rgba(255,255,255,0.35)` | Section badge labels, step labels, footer links |
+| **Borders** | `rgba(255,255,255,0.06)–0.08` | Section dividers, dashed pills |
+| **Accent (brand purple)** | `oklch(0.62 0.18 275)` | Dots, highlights, progress bars |
 
-Left column:
-  Badge: rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5
-         text-xs font-semibold uppercase tracking-widest text-primary
-  H1: text-4xl → text-6xl font-semibold leading-[1.08] tracking-tight text-balance
-  Sub: text-lg text-muted-foreground max-w-[52ch]
-  CTAs: flex gap-3, active:scale-[0.97] on both buttons
-  Stats: flex gap-8 pt-4 border-t border-dashed
-         value: text-2xl font-semibold text-primary tabular-nums
-         label: text-xs text-muted-foreground
+**Rules:**
+- Never use `bg-white`, `bg-background`, `bg-zinc-50` on section wrappers
+- Set backgrounds via `style={{ background: "#060f1a" }}` (inline) for sections
+- Pricing section stays `bg-black` with blue glow — existing dark treatment kept
+- Test preview stays `bg-zinc-950` — existing dark treatment kept
+- Cards inside sections remain white (`bg-white`) — do NOT darken cards
 
-Right column (DashboardMockup):
-  Entrance: opacity 0→1, x 32→0, y 16→0, duration 0.85s, delay 0.25s
-  Float: animate={{ y: [0,-7,0] }} repeat Infinity, duration 5s, easeInOut
-  Stat cards: animate={{ opacity: [1,0.75,1] }} staggered, repeat Infinity
-  Progress bars: initial={{ width:0 }} animate={{ width:"X%" }} delay 1.0–1.3s
-```
+---
 
-## How It Works (zig-zag — light/zinc-50)
-```
-Alternating: flex md:flex-row + md:flex-row-reverse on even steps
-Visual side: ghost number (oklch 0.62 0.18 275 / 0.05) + contextual mini-UI card
-  Step 01: Signup form card (email/pw fields + CTA button)
-  Step 02: Study session card (domain progress bars, animated)
-  Step 03: Results/score card (PASSED badge, score breakdown)
-Text side: step label, h3, description, detail pill (border-dashed rounded-full)
+## Liquid Glass Effect
+
+Used on: navbar CTA button, hero CTA button, cookie banner Accept button.
+
+```css
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.01);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%,
+    rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+    rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
 ```
 
-## Pricing Section (dark — apply ONLY to pricing)
-```
-bg-black overflow-x-hidden min-h-screen
-Sparkles particle overlay (density 1800, white, direction bottom)
-Grid background: linear-gradient 70×80px, #ffffff18 and #3a3a3a01
-Blue ellipse glow: border 200px solid #3131f5, blur 92px, left/right -568px, opacity 0.25
-
-Header: badge "PRICING" text-xs text-blue-400/80 uppercase tracking-widest
-Heading: VerticalCutReveal, text-4xl md:text-5xl font-semibold text-white tracking-tight
-Sub: text-base text-zinc-400 max-w-[40ch] mx-auto
-
-Toggle: bg-neutral-900 border border-white/10, layoutId spring (500, 30)
-Active tab: bg-gradient-to-t from-blue-600 to-blue-500, border-blue-500/60
-"SAVE 17%" badge: bg-emerald-500/20 text-emerald-400 text-[10px] uppercase tracking-wide
-
-Cards: grid md:grid-cols-2 max-w-3xl gap-5
-Free card:  bg-neutral-950 border border-white/[0.07] rounded-2xl z-10
-            CTA: bg-white/[0.07] border border-white/[0.12] text-white hover:bg-white/[0.12]
-            Check icons: text-white/40
-            Feature text: text-zinc-500
-
-Pro card:   bg-gradient-to-br from-neutral-900 via-[#0c0c1e] to-neutral-900
-            border border-blue-900/40 rounded-2xl shadow-[0px_-13px_280px_0px_#0900ff] z-20
-            Top accent: h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent
-            "Most Popular" badge: top-5 right-5, bg-blue-500/20 border-blue-500/30 text-blue-300 text-[10px] uppercase tracking-widest
-            CTA: bg-gradient-to-t from-blue-600 to-blue-500 shadow-blue-900/50 border-blue-400/30
-            Check icons: text-emerald-400
-            Feature text: text-zinc-300
-
-Price typography: clamp(2.5rem,6vw,3.5rem) font-bold leading-none
-Feature header: text-xs font-semibold uppercase tracking-widest text-zinc-500
-Card hover: whileHover={{ y: -4 }} spring(350, 26)
-Prices: <NumberFlow> animated, tabular-nums
-
-Trust footer: ShieldCheck icon + "7-day money-back guarantee · Instant access · No hidden fees" text-xs text-zinc-600
-```
-
-## Core Features Cards (gradient cards — apply ONLY to features section)
-```
-White background, 80px vertical + 20px horizontal padding
-Badge: text-xs, color oklch(0.62 0.18 275), weight 600, uppercase, tracking 1px (NO gradient text)
-Title: 2.75rem, weight 500, color #0f172a, letter-spacing -0.02em
-Grid: 3 columns, 24px gap (2 cols < 900px, 1 col < 600px)
-Card: border-radius 20px, height 340px, flex-col justify-end, bg #F4F8F9
-      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1)
-Card 1 gradient: radial-gradient(circle at 50% 0%, #FFB347 → #F9ED96 → #F4F8F9)
-Card 2 gradient: radial-gradient(circle at 50% 0%, #E5A1F5 → #F8ACA0 → #F4F8F9)
-Card 3 gradient: radial-gradient(circle at 50% 0%, #F9ED96 → #E5A1F5 → #F4F8F9)
-Internal elements: absolutely positioned, no external images
-```
-
-## Stats Section (white — 3-card)
-```
-bg-white, py-20
-Section header: badge + VerticalCutReveal h2 + sub-paragraph "Numbers that reflect real student outcomes..."
-
-3-card grid: grid-cols-1 md:grid-cols-3 gap-6
-Card structure (each):
-  - colored bg: blue-600 (pass rate), emerald-600 (students), fuchsia-700 (questions)
-  - rounded-2xl overflow-hidden shadow-lg min-h-[320px] flex flex-col
-  - Ghost ordinal ("01","02","03"): absolute top-right, clamp(6rem,16vw,9rem), white/7%, pointer-events-none
-  - Icon: size-7 text-white/50, px-6 mb-5
-  - Thin rule: h-px bg-white/15 mx-6 mb-5
-  - Value: clamp(2.75rem,7vw,3.75rem) font-bold text-white, NumberFlow animated
-  - Title: text-base font-semibold text-white
-  - Desc: text-sm text-white/70 leading-relaxed
-  - CTA bar: Link, bg-black/80 group-hover:bg-black/90, px-6 py-4, ArrowRight icon translates +1 on hover
-Card hover: whileHover={{ y: -5 }} spring(380, 28)
-Numbers: NumberFlow animated, tabular-nums
-Cards: 94% First-Attempt Pass Rate · 12,847+ Students Prepared · 2,400+ Practice Questions
-```
-
-## Testimonials
-```
-bg-zinc-50/50
-Featured card: full width, rounded-2xl border bg-white p-8, text-lg quote
-Secondary: grid md:grid-cols-[1fr_1fr] — left: 2 stacked cards, right: 1 taller card with score breakdown
-Avatars: Next.js Image, ui-avatars.com API, size 40/48
-```
-
-## Social Proof
-```
-Simple text marquee of company names (Deloitte, KPMG, EY, PwC, Accenture, JPMorgan Chase...)
-NO logo images — company names in text-foreground/25 font-medium
-animate-scroll-logos CSS animation, 30s linear infinite
-Label: "Students from these organizations prepare with PrepCSCA"
-```
-
-## CTA Banner (solid purple — asymmetric)
-```
-background: oklch(0.52 0.22 275), py-24, overflow-hidden
-Grid: md:grid-cols-[2fr_3fr] gap-12 md:gap-20
-Left: "94%" in text-[5rem] md:text-[6rem] font-bold text-white/90
-Right: VerticalCutReveal heading + body + 2 CTAs
-Decorative: subtle grid overlay (white, opacity-10) + SVG arc (top-right corner)
-CTA primary: bg-white text-[oklch(0.52_0.22_275)] font-semibold
-CTA secondary: border border-white/40 text-white bg-white/10
-```
-
-## Buttons (pill — apply everywhere)
-```
-Base: rounded-full font-semibold active:scale-[0.97] active:-translate-y-px
-Sizes:
-  default: h-10 px-5 py-2
-  sm:      h-9 px-4 text-xs
-  lg:      h-11 px-8 text-sm
-  icon:    h-10 w-10
-
-shadcn <Button>: cva base is rounded-full — do NOT add rounded-md anywhere
-
-Custom pill buttons (native <button> or <motion.button>):
-  Primary:  bg-primary text-white hover:bg-primary/90
-  Ghost:    bg-zinc-100 text-zinc-800 hover:bg-zinc-200
-  Google:   border border-input bg-white text-zinc-800 hover:bg-zinc-50
-
-Input fields in auth forms:
-  rounded-full pl-10 py-2.5 — matches pill aesthetic
-
-Progress indicator (register step flow):
-  Uses <motion.button> with spring(400, 20, 0.8) physics
-  Back button: animates in/out width 0→64px, opacity 0→1
-  Continue/Finish: flex-1, uses bg-primary
-  Progress dots: oklch(0.62 0.18 275) bar, spring(300, 20, 0.8)
-```
+---
 
 ## Animation System
-- **Easing**: `EASE_OUT_EXPO = [0.16, 1, 0.3, 1]` — use on ALL scroll reveals
-- **Spring (text)**: `type:"spring", stiffness: 260, damping: 38` — VerticalCutReveal
-- **Spring (hover)**: `type:"spring", stiffness: 400, damping: 20` — nav links, hover states
-- **Scroll reveals**: Framer `useInView`, `once: true`, `margin: "-80px"`, `initial opacity 0 + y 20–40`
-- **Stagger**: `delay: base + i * 0.1` on children
-- **Float**: `animate={{ y:[0,-7,0] }} repeat:Infinity duration:5 ease:"easeInOut"` — hero mockup
-- **Pulse**: `animate={{ opacity:[1,0.75,1] }}` staggered per stat card
-- **Progress bars**: `initial={{ width:0 }} animate={{ width:"X%" }}` with EASE_OUT_EXPO + delay
-- **Text reveal**: `VerticalCutReveal` on ALL section headings (spring 260, 38)
-- **Button feedback**: `active:scale-[0.97]` on all CTAs
 
-## Typography Scale
+| Name | Definition | Usage |
+|---|---|---|
+| `fade-rise` | `opacity 0→1, translateY 24px→0, 0.8s ease-out` | Hero h1 |
+| `fade-rise-delay` | same + `0.2s delay` | Hero subtext |
+| `fade-rise-delay-2` | same + `0.4s delay` | Hero CTA button |
+| `EASE_OUT_EXPO` | `[0.16, 1, 0.3, 1]` | All scroll reveals |
+| Scroll reveal | `useInView once:true margin:"-80px"` + `opacity 0→1 y 20–40→0` | Every section |
+| Stagger | `delay: base + i * 0.1` | Children in grids |
+| Float | `animate={{ y:[0,-7,0] }} Infinity 5s easeInOut` | Dashboard mockup |
+| Spring (text) | `stiffness:260 damping:38` | VerticalCutReveal |
+| Spring (hover) | `stiffness:400 damping:20` | Nav links |
+| Number flow | `<NumberFlow>` component | Stat values |
+
+---
+
+## Navbar
+
 ```
-Section badge:    text-xs font-semibold uppercase tracking-widest text-primary (solid — NO gradient)
-Section heading:  text-3xl md:text-4xl lg:text-5xl font-semibold (via VerticalCutReveal)
-Section sub:      text-lg text-muted-foreground max-w-[48ch]→[52ch]
-Hero H1:          text-4xl → text-6xl font-semibold leading-[1.08] tracking-tight text-balance
-Stat value:       text-2xl font-semibold text-primary tabular-nums (inline stats)
-Dark stat:        clamp(4rem,10vw,7.5rem) featured · text-5xl supporting, text-[oklch(0.78_0.14_275)]
-Card title:       text-xl font-semibold
-Card body:        text-sm text-muted-foreground
+Overlaid on the hero video — NOT fixed/sticky
+Lives inside HeroSection, rendered above the video z-10
+relative z-10, flex row, justify-between
+px-8 py-6, max-w-7xl mx-auto
+
+Logo: "Genzy®" — text-3xl tracking-tight text-white
+      fontFamily: "'Instrument Serif', serif"
+      ® as <sup className="text-xs">
+
+Nav links (hidden md:below): Home · Features · Pricing · FAQ · Get In Touch
+  Active: rgba(255,255,255,1)
+  Inactive: rgba(255,255,255,0.5) → hover rgba(255,255,255,1)
+  Transition: transition-colors 150ms
+  Inline onMouseEnter/onMouseLeave (no CSS class conflict with dark bg)
+
+CTA: "Begin Journey"
+  liquid-glass rounded-full px-6 py-2.5 text-sm text-white
+  hover:scale-[1.03] transition-transform duration-200
 ```
+
+---
+
+## Hero Section (fullscreen video)
+
+```
+<section> relative min-h-[100dvh] flex flex-col overflow-hidden
+
+Video background:
+  <video autoPlay loop muted playsInline>
+  absolute inset-0 w-full h-full object-cover z-0
+  src: https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/
+       hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4
+
+<Navbar /> — overlaid directly, relative z-10
+
+Hero content: relative z-10 flex flex-col items-center justify-center text-center flex-1 px-6 pb-40
+
+H1: "Where ambition meets the exam that opens China."
+  text-5xl sm:text-7xl md:text-8xl font-normal leading-[0.95] max-w-7xl text-white
+  fontFamily: "'Instrument Serif', serif"
+  letterSpacing: "-2.46px"
+  Accent words ("ambition", "China."): <em className="not-italic" style={{ color: "rgba(255,255,255,0.45)" }}>
+
+Subtext: mt-8 max-w-2xl text-base sm:text-lg leading-relaxed
+  color: rgba(255,255,255,0.55)
+  fontFamily: var(--font-body, Inter, sans-serif)
+
+CTA: "Start Preparing" — liquid-glass rounded-full px-14 py-5 text-base text-white mt-12
+  hover:scale-[1.03] transition-transform duration-200
+  Link href="/register"
+
+Animations: animate-fade-rise (h1) · animate-fade-rise-delay (p) · animate-fade-rise-delay-2 (cta)
+No overlays, no gradients, no decorative blobs — video provides all depth
+```
+
+---
+
+## Section Pattern (all non-video sections)
+
+```
+Section wrapper:  style={{ background: "#060f1a" }} + appropriate py-20/py-24
+Badge label:      text-xs font-semibold uppercase tracking-widest
+                  color: rgba(255,255,255,0.35)
+Section heading:  font-normal, color: rgba(255,255,255,0.95)
+                  fontFamily: "'Instrument Serif', serif"
+                  Size: text-3xl → text-5xl (or matching existing section sizes)
+Section subtext:  text-lg, color: rgba(255,255,255,0.45)
+Borders/dividers: rgba(255,255,255,0.06) to rgba(255,255,255,0.08)
+Dashed pill:      border: "1px dashed rgba(255,255,255,0.15)"
+                  color: rgba(255,255,255,0.35)
+```
+
+---
+
+## Social Proof
+
+```
+Background: #060f1a, borderBottom: "1px solid rgba(255,255,255,0.06)", py-12
+Label: "Students from these countries prepare with Genzy"
+       color: rgba(255,255,255,0.35), text-sm, text-center
+Ticker: country names, color: rgba(255,255,255,0.2), font-medium tracking-wide
+animate-scroll-logos CSS animation, 30s linear infinite
+```
+
+---
+
+## Core Features
+
+```
+Background: #060f1a, padding: "80px 20px"
+Badge: rgba(255,255,255,0.35)
+Heading: Instrument Serif, rgba(255,255,255,0.95), 2.75rem, font-weight 400
+Sub: rgba(255,255,255,0.45), 1.125rem
+
+Cards: white bg, unchanged
+Grid: 3 columns (2 < 900px, 1 < 600px), 24px gap
+Card backgrounds (gradient, top → bottom):
+  Card 1 (Smart Study System):   #FFB347 → #F9ED96 → #F4F8F9
+  Card 2 (Realistic Tests):      #E5A1F5 → #F8ACA0 → #F4F8F9
+  Card 3 (Progress Analytics):   #F9ED96 → #E5A1F5 → #F4F8F9
+All card internals (text, icons, pill buttons) stay white-bg / light-text — do NOT invert
+```
+
+---
+
+## How It Works
+
+```
+Background: #060f1a, py-24
+Step label:   rgba(255,255,255,0.35), text-xs uppercase tracking-widest
+Step heading: Instrument Serif, rgba(255,255,255,0.95), text-2xl → text-3xl, font-normal
+Step body:    rgba(255,255,255,0.5), leading-relaxed max-w-[44ch]
+Step pill:    border "1px dashed rgba(255,255,255,0.15)", color rgba(255,255,255,0.35)
+Ghost number: rgba(255,255,255,0.04), clamp(7rem,16vw,11rem)
+
+Layout: flex flex-col items-center (default), md:flex-row (even: md:flex-row-reverse)
+Visual side: w-full md:flex-1 — MUST be w-full on mobile (not flex-1 only — items-center shrinks it)
+Text side: flex-1
+
+Step cards (white — do NOT darken):
+  Step 01: Signup form card (email/pw/CTA/Google)
+  Step 02: Study session card (domain progress bars)
+  Step 03: PASSED results card (score breakdown, Download Certificate)
+```
+
+---
+
+## Test Preview
+
+```
+Background: bg-zinc-950 (unchanged, already dark)
+Heading: Instrument Serif font-normal, text-white
+Badge: text-[oklch(0.78_0.14_275)]
+Interactive question card: dark zinc treatment, unchanged
+```
+
+---
+
+## Materials Preview
+
+```
+Background: #060f1a, py-20
+Badge/heading/sub: standard dark section pattern
+Material cards: white bg, unchanged internal styling
+Pro lock overlay: backdrop-blur-[2px] + Lock icon + "Pro Only" gradient badge
+```
+
+---
+
+## Stats Section
+
+```
+Background: #060f1a, py-20
+Badge/heading/sub: standard dark section pattern
+Heading: "Proven Results" via VerticalCutReveal, Instrument Serif font-normal
+
+Stat cards: 3-col grid, colored backgrounds unchanged:
+  blue-600 (94% pass rate) · emerald-600 (12,847+ students) · fuchsia-700 (2,400+ questions)
+  Cards keep white text, NumberFlow values, colored CTA bars — do NOT change
+```
+
+---
+
+## Pricing Section
+
+```
+bg-black min-h-screen (unchanged)
+Sparkles overlay + blue ellipse glow (unchanged)
+Heading: Instrument Serif font-normal text-white (updated from font-semibold)
+Cards: dark neutral treatment, unchanged
+```
+
+---
+
+## Testimonials
+
+```
+Background: #060f1a, py-20
+Badge/heading/sub: standard dark section pattern
+Testimonial cards: white bg (bg-white), dark text inside — do NOT invert
+Featured card: rounded-2xl border bg-white p-8
+Secondary: md:grid-cols-[1fr_1fr], left 2 stacked + right 1 taller with score breakdown
+```
+
+---
+
+## FAQ Section
+
+```
+Background: #060f1a, py-20
+Badge/heading/sub: standard dark section pattern
+Accordion:
+  AccordionItem border: rgba(255,255,255,0.08)
+  AccordionTrigger: rgba(255,255,255,0.8), text-sm font-medium
+  AccordionContent: rgba(255,255,255,0.45), text-sm leading-relaxed
+Grid: md:grid-cols-2 gap-x-12
+```
+
+---
+
+## CTA Banner
+
+```
+background: oklch(0.52 0.22 275), py-24, overflow-hidden (unchanged purple)
+Heading: Instrument Serif font-normal text-white (updated from font-semibold)
+Layout: md:grid-cols-[2fr_3fr], left "94%" stat, right heading + body + 2 CTAs
+Decorative: grid overlay white/10 + SVG arc top-right
+```
+
+---
+
+## Footer
+
+```
+Background: #060f1a
+Border top: rgba(255,255,255,0.06)
+Logo: PrepCSCA SVG icon + "Genzy" text rgba(255,255,255,0.85)
+Category headings: rgba(255,255,255,0.7), text-sm font-semibold
+Links: rgba(255,255,255,0.35), text-sm
+Social links: rgba(255,255,255,0.3), text-xs
+Bottom rule: rgba(255,255,255,0.06)
+Copyright: rgba(255,255,255,0.25)
+```
+
+---
+
+## Cookie Consent Banner
+
+```
+Fixed bottom-0, z-50, px-4 pb-4 sm:px-6 sm:pb-6
+Inner: max-w-2xl mx-auto rounded-2xl p-5
+Background: rgba(6,15,26,0.92) + backdrop-filter blur(16px)
+Border: rgba(255,255,255,0.1)
+Shadow: 0 24px 64px -12px rgba(0,0,0,0.6)
+
+Layout: flex flex-col sm:flex-row items-start sm:items-center gap-4
+Icon: 🍪 in size-9 rounded-xl, background rgba(255,255,255,0.06)
+Text: text-sm, rgba(255,255,255,0.6), links rgba(255,255,255,0.85) underlined
+Buttons:
+  Decline: rgba(255,255,255,0.05) bg, rgba(255,255,255,0.08) border, text rgba(255,255,255,0.4)
+  Accept:  liquid-glass rounded-full, text-white font-medium
+
+State: localStorage key "csca_consent" → "accepted" | "declined"
+Shows only once (hidden if key exists)
+Visible on all marketing pages (in MarketingLayout)
+```
+
+---
+
+## Privacy Policy Page
+
+```
+Route: /privacy-policy (inside (marketing) route group)
+Background: #060f1a min-h-screen
+
+Header: border-b rgba(255,255,255,0.06), px-6 py-8
+  ← Back link: rgba(255,255,255,0.35), text-xs
+  H1: "Privacy Policy" — Instrument Serif, rgba(255,255,255,0.95), text-4xl sm:text-5xl
+  Effective date: rgba(255,255,255,0.35), text-sm
+
+Sections (12 total):
+  H2: Instrument Serif font-normal, rgba(255,255,255,0.9), text-2xl
+  Body: text-sm leading-relaxed, rgba(255,255,255,0.5)
+  Strong emphasis: rgba(255,255,255,0.75)
+  Links/emails: rgba(255,255,255,0.7), underlined
+  Code snippets: bg rgba(255,255,255,0.06), text-xs, rounded
+
+Contact email: privacy@genzy.com
+```
+
+---
 
 ## Subscription Tiers
-- **Free**: 2 practice tests, basic study guide (first 2 materials), community access
-- **Pro ($9/month | $89/year)**: All 40+ tests, full material library, analytics, PDF certs, priority support
-- Lock UI pattern: `backdrop-blur-[2px]` overlay + `Lock` icon (lucide) + "Pro Only" badge
-- Badge uses `linear-gradient(90deg, #9B99FE, #2BC8B7)` as background on a `<span>` (NOT gradient text)
 
-## Streak Feature (platform-only — do NOT add to marketing site)
+| Tier | Price | Includes |
+|---|---|---|
+| Free | $0 | 2 practice tests, basic study guide (2 materials), community access, score tracking |
+| Pro | $9/mo · $89/yr | All 40+ tests, full material library, advanced analytics, PDF exam certificates, priority support, offline study mode |
 
-> This feature is ready in `src/components/ui/streak-card.tsx` but must only be wired into app routes (`/dashboard`, `/profile`) when the authenticated platform is built.
+Lock UI: `backdrop-blur-[2px]` overlay + `Lock` icon + "Pro Only" badge
+Badge background: `linear-gradient(90deg, #9B99FE, #2BC8B7)` on `<span>` (NOT gradient text)
 
-### What it is
-A `<StreakCard>` component that shows a student's daily study streak, longest streak, and total activity. Designed for the dashboard sidebar or profile page.
-
-### Files
-```
-src/components/ui/streak-card.tsx     — main card component (DONE)
-src/components/ui/streak-calendar.tsx — weekly calendar sub-component (TODO — must be created)
-```
-
-> `streak-calendar.tsx` is imported by `streak-card.tsx` but does not exist yet. It must be built or sourced before `StreakCard` can be used. It exports `StreakCalendar` with a `streak: StreakPeriod[]` prop and a `view="week"` + `startOfWeek` API.
-
-### Props (`StreakCardProps`)
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `streak` | `StreakPeriod[]` | required | Array of `{ periodStart, periodEnd }` ISO date strings |
-| `currentStreak` | `number` | required | Current consecutive days |
-| `longestStreak` | `number` | required | All-time longest streak |
-| `total` | `number` | required | Total active days ever |
-| `title` | `string` | `"Streak"` | Card heading |
-| `actionLabel` | `string` | `"View Details"` | Link button label |
-| `onActionClick` | `() => void` | — | Link button callback |
-| `showHowItWorks` | `boolean` | `true` | Show collapsible explainer |
-| `howItWorksTitle` | `string` | `"How do streaks work?"` | Dropdown heading |
-| `howItWorksItems` | `string[]` | 3 default rules | Bullet items in explainer |
-| `defaultHowItWorksOpen` | `boolean` | `false` | Explainer open on mount |
-
-### Usage (when platform is built)
-```tsx
-import { StreakCard } from "@/components/ui/streak-card"
-
-<StreakCard
-  streak={[
-    { periodStart: "2026-05-24", periodEnd: "2026-05-24" },
-    { periodStart: "2026-05-25", periodEnd: "2026-05-28" },
-  ]}
-  currentStreak={16}
-  longestStreak={100}
-  total={131}
-  onActionClick={() => router.push("/profile")}
-/>
-```
-
-### Placement
-- **Dashboard** (`/dashboard`): sidebar widget or stats row below the welcome card
-- **Profile** (`/profile`): dedicated streak section below subscription info
-
-### Data requirements
-Streak periods come from `test_attempts` table — query completed attempts grouped into consecutive date ranges. The `StreakPeriod[]` array represents contiguous active windows, not individual days.
-
-### Dependencies
-- `lucide-react` (already installed) — `Flame`, `CheckCircle2`, `ChevronDown`, `RefreshCcw`
-- `@/components/ui/button` (already exists)
-- `@/components/ui/streak-calendar` (TODO — must be created first)
-- `@/lib/utils` `cn()` (already exists)
+---
 
 ## File Conventions
-- Marketing sections: `src/components/blocks/`
-- UI primitives: `src/components/ui/`
-- Shared layout pieces: `src/components/shared/`
-- Route groups: `(marketing)` · `(auth)` · `(app)`
-- All "use client" components explicitly marked
-- Server components default (no directive needed)
+
+```
+src/components/blocks/    — marketing page sections
+src/components/ui/        — reusable UI primitives
+src/components/shared/    — layout pieces (navbar, footer, logo, cookie-banner)
+src/app/(marketing)/      — marketing routes (home, privacy-policy)
+src/app/(auth)/           — login, register
+src/app/(app)/            — authenticated platform
+```
+
+All client components: `"use client"` at top
+Server components: no directive needed
+
+---
+
+## Absolute Bans
+
+1. **Gradient text** — `background-clip: text` + any gradient. Zero exceptions.
+2. **Light section backgrounds** — no `bg-white`, `bg-zinc-50`, `bg-background` on section wrappers
+3. **Inverting card internals** — cards stay white with dark text inside
+4. **Font-weight on display headings** — Instrument Serif always `font-normal` (weight 400)
+5. **Centered hero** — hero is fullscreen video; do not revert to split-screen light layout
+6. **Tech company logos in social proof** — country names only, no corporate logos
+
+---
+
+## Streak Feature (platform-only — NOT on marketing site)
+
+Ready in `src/components/ui/streak-card.tsx`. Wire into `/dashboard` or `/profile` only.
+`streak-calendar.tsx` still TODO — must be created before `StreakCard` is usable.

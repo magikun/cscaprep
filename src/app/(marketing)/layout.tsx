@@ -1,5 +1,5 @@
-import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
+import { CookieBanner } from "@/components/shared/cookie-banner";
 
 export default function MarketingLayout({
   children,
@@ -8,9 +8,9 @@ export default function MarketingLayout({
 }) {
   return (
     <>
-      <Navbar />
-      <main className="flex-1 pt-[60px]">{children}</main>
+      <main className="flex-1">{children}</main>
       <Footer />
+      <CookieBanner />
     </>
   );
 }

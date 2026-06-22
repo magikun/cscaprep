@@ -123,7 +123,7 @@ export function PricingSection() {
         <span className="text-xs font-semibold uppercase tracking-widest text-blue-400/80 block">
           Pricing
         </span>
-        <h2 className="text-4xl md:text-5xl font-semibold text-white leading-tight tracking-tight">
+        <h2 className="text-4xl md:text-5xl font-normal text-white leading-tight" style={{ fontFamily: "'Poppins', sans-serif" }}>
           <VerticalCutReveal
             splitBy="words"
             staggerDuration={0.15}

@@ -2,7 +2,7 @@ import { HeroSection } from "@/components/blocks/hero-section";
 import { SocialProof } from "@/components/blocks/social-proof";
 import { CoreFeatures } from "@/components/blocks/core-features";
 import { HowItWorks } from "@/components/blocks/how-it-works";
-import { TestPreview } from "@/components/blocks/test-preview";
+import { WhyUsSection } from "@/components/blocks/why-us-section";
 import { MaterialsPreview } from "@/components/blocks/materials-preview";
 import { StatsSection } from "@/components/blocks/stats-section";
 import { PricingSection } from "@/components/blocks/pricing-section";
@@ -17,7 +17,7 @@ export default function HomePage() {
       <SocialProof />
       <CoreFeatures />
       <HowItWorks />
-      <TestPreview />
+      <WhyUsSection />
       <MaterialsPreview />
       <StatsSection />
       <PricingSection />

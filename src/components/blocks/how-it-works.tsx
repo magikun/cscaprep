@@ -210,19 +210,19 @@ export function HowItWorks() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="how-it-works" ref={ref} className="py-24 bg-zinc-50/40">
+    <section id="how-it-works" ref={ref} className="py-24" style={{ background: "#060f1a" }}>
       <div className="mx-auto max-w-5xl px-6">
         {/* Header */}
         <div className="mb-20">
           <motion.span
-            className="text-xs font-semibold uppercase tracking-widest mb-4 block text-primary"
+            className="text-xs font-semibold uppercase tracking-widest mb-4 block" style={{ color: "rgba(255,255,255,0.35)" }}
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
           >
             Simple Process
           </motion.span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal mb-4" style={{ color: "rgba(255,255,255,0.95)", fontFamily: "'Poppins', sans-serif" }}>
             {isInView && (
               <VerticalCutReveal
                 splitBy="words"
@@ -235,7 +235,7 @@ export function HowItWorks() {
             )}
           </h2>
           <motion.p
-            className="text-lg text-muted-foreground max-w-[48ch]"
+            className="text-lg max-w-[48ch]" style={{ color: "rgba(255,255,255,0.45)" }}
             initial={{ opacity: 0, y: 16 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, ease: EASE_OUT_EXPO, delay: 0.18 }}
@@ -259,13 +259,13 @@ export function HowItWorks() {
                 transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.1 + i * 0.14 }}
               >
                 {/* Visual side */}
-                <div className="flex-1 flex items-center justify-center min-h-[260px] relative">
+                <div className="w-full md:flex-1 flex items-center justify-center min-h-[260px] relative">
                   {/* Ghost number */}
                   <span
                     className="absolute select-none font-bold leading-none pointer-events-none"
                     style={{
                       fontSize: "clamp(7rem, 16vw, 11rem)",
-                      color: "oklch(0.62 0.18 275 / 0.05)",
+                      color: "rgba(255,255,255,0.04)",
                       letterSpacing: "-0.04em",
                     }}
                   >
@@ -279,16 +279,16 @@ export function HowItWorks() {
 
                 {/* Text side */}
                 <div className="flex-1">
-                  <div className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
+                  <div className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>
                     Step {step.number}
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-semibold mb-4 tracking-tight">
+                  <h3 className="text-2xl md:text-3xl font-normal mb-4 tracking-tight" style={{ color: "rgba(255,255,255,0.95)", fontFamily: "'Poppins', sans-serif" }}>
                     {step.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed mb-5 max-w-[44ch]">
+                  <p className="leading-relaxed mb-5 max-w-[44ch]" style={{ color: "rgba(255,255,255,0.5)" }}>
                     {step.description}
                   </p>
-                  <div className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground border border-dashed rounded-full px-3.5 py-1.5">
+                  <div className="inline-flex items-center gap-2 text-xs font-medium rounded-full px-3.5 py-1.5" style={{ color: "rgba(255,255,255,0.35)", border: "1px dashed rgba(255,255,255,0.15)" }}>
                     <span
                       className="size-1.5 rounded-full flex-shrink-0"
                       style={{ background: "oklch(0.62 0.18 275)" }}

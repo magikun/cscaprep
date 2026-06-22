@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence, useMotionValue } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Eye, EyeOff, Mail, Lock, User, CircleCheck,
   BookOpen, BarChart3, Shield, Trophy, ArrowRight,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 
-/* ── Google icon ─────────────────────────────────────────── */
+const PURPLE = "oklch(0.62 0.18 275)";
+
 function GoogleIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden>
@@ -23,22 +23,20 @@ function GoogleIcon() {
   );
 }
 
-/* ── Step progress dots ──────────────────────────────────── */
+/* ── Step progress ─────────────────────────────────────── */
 function StepProgress({ step }: { step: number }) {
   return (
     <div className="flex items-center gap-6 relative">
       {[1, 2, 3].map((dot) => (
         <div
           key={dot}
-          className={cn(
-            "w-2 h-2 rounded-full relative z-10 transition-colors duration-300",
-            dot <= step ? "bg-primary" : "bg-zinc-200"
-          )}
+          className="w-2 h-2 rounded-full relative z-10 transition-colors duration-300"
+          style={{ background: dot <= step ? PURPLE : "rgba(255,255,255,0.15)" }}
         />
       ))}
       <motion.div
         className="absolute -left-[8px] top-1/2 -translate-y-1/2 h-3 rounded-full"
-        style={{ background: "oklch(0.62 0.18 275)" }}
+        style={{ background: PURPLE }}
         animate={{ width: step === 1 ? 24 : step === 2 ? 60 : 96 }}
         transition={{ type: "spring", stiffness: 300, damping: 20, mass: 0.8 }}
       />
@@ -46,11 +44,20 @@ function StepProgress({ step }: { step: number }) {
   );
 }
 
-/* ── Step 1 — Account details ────────────────────────────── */
+const darkInput = {
+  background: "rgba(255,255,255,0.05)",
+  border: "1px solid rgba(255,255,255,0.1)",
+  color: "rgba(255,255,255,0.9)",
+  caretColor: "white",
+} as const;
+
+const inputClass =
+  "w-full py-3 rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-white/20 transition-colors";
+
+/* ── Step 1 — Account details ──────────────────────────── */
 function Step1({
   name, setName, email, setEmail,
-  password, setPassword, showPw, setShowPw,
-  onGoogle,
+  password, setPassword, showPw, setShowPw, onGoogle,
 }: {
   name: string; setName: (v: string) => void;
   email: string; setEmail: (v: string) => void;
@@ -61,114 +68,108 @@ function Step1({
   return (
     <div className="space-y-4">
       <div>
-        <label className="text-sm font-medium mb-1.5 block" htmlFor="name">Full Name</label>
+        <label className="text-xs font-medium mb-2 block" htmlFor="name"
+          style={{ color: "rgba(255,255,255,0.5)" }}>Full Name</label>
         <div className="relative">
-          <User className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-          <input
-            id="name" type="text" value={name} onChange={(e) => setName(e.target.value)}
+          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4"
+            style={{ color: "rgba(255,255,255,0.25)" }} />
+          <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)}
             placeholder="Jane Smith" required
-            className="w-full pl-10 pr-4 py-2.5 rounded-full border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-          />
+            className={inputClass + " pl-10 pr-4"} style={darkInput} />
         </div>
       </div>
 
       <div>
-        <label className="text-sm font-medium mb-1.5 block" htmlFor="email">Email</label>
+        <label className="text-xs font-medium mb-2 block" htmlFor="email"
+          style={{ color: "rgba(255,255,255,0.5)" }}>Email</label>
         <div className="relative">
-          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-          <input
-            id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+          <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4"
+            style={{ color: "rgba(255,255,255,0.25)" }} />
+          <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com" required
-            className="w-full pl-10 pr-4 py-2.5 rounded-full border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-          />
+            className={inputClass + " pl-10 pr-4"} style={darkInput} />
         </div>
       </div>
 
       <div>
-        <label className="text-sm font-medium mb-1.5 block" htmlFor="password">Password</label>
+        <label className="text-xs font-medium mb-2 block" htmlFor="password"
+          style={{ color: "rgba(255,255,255,0.5)" }}>Password</label>
         <div className="relative">
-          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-          <input
-            id="password" type={showPw ? "text" : "password"}
-            value={password} onChange={(e) => setPassword(e.target.value)}
+          <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4"
+            style={{ color: "rgba(255,255,255,0.25)" }} />
+          <input id="password" type={showPw ? "text" : "password"} value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Min. 8 characters" minLength={8} required
-            className="w-full pl-10 pr-10 py-2.5 rounded-full border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-          />
-          <button
-            type="button" onClick={() => setShowPw(!showPw)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-          >
+            className={inputClass + " pl-10 pr-11"} style={darkInput} />
+          <button type="button" onClick={() => setShowPw(!showPw)}
+            className="absolute right-3.5 top-1/2 -translate-y-1/2"
+            style={{ color: "rgba(255,255,255,0.25)" }}>
             {showPw ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
           </button>
         </div>
       </div>
 
       <div className="relative flex items-center gap-3 py-1">
-        <div className="h-px flex-1 bg-border" />
-        <span className="text-xs text-muted-foreground">or</span>
-        <div className="h-px flex-1 bg-border" />
+        <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.08)" }} />
+        <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>or</span>
+        <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.08)" }} />
       </div>
 
-      <button
-        type="button" onClick={onGoogle}
-        className="w-full flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-full border border-input bg-white text-sm font-semibold text-zinc-800 hover:bg-zinc-50 transition-colors active:scale-[0.97]"
-      >
+      <button type="button" onClick={onGoogle}
+        className="w-full flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-medium transition-colors active:scale-[0.97]"
+        style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.8)" }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}>
         <GoogleIcon />
         Continue with Google
       </button>
 
-      <p className="text-xs text-center text-muted-foreground">
+      <p className="text-xs text-center" style={{ color: "rgba(255,255,255,0.3)" }}>
         By signing up you agree to our{" "}
-        <Link href="#" className="underline">Terms</Link> and{" "}
-        <Link href="#" className="underline">Privacy Policy</Link>.
+        <Link href="#" className="underline underline-offset-2" style={{ color: "rgba(255,255,255,0.5)" }}>Terms</Link>
+        {" "}and{" "}
+        <Link href="/privacy-policy" className="underline underline-offset-2" style={{ color: "rgba(255,255,255,0.5)" }}>Privacy Policy</Link>.
       </p>
     </div>
   );
 }
 
-/* ── Step 2 — CSCA level ─────────────────────────────────── */
+/* ── Step 2 — CSCA level ───────────────────────────────── */
 const levels = [
-  { id: "beginner",     Icon: BookOpen,  label: "Complete Beginner",    desc: "No prior Chinese or CSCA exam experience" },
-  { id: "intermediate", Icon: BarChart3, label: "Some Background",      desc: "Studied some physics, chemistry or math at high school level" },
-  { id: "advanced",     Icon: Shield,    label: "Actively Preparing",   desc: "Studying for a Chinese university application now" },
-  { id: "professional", Icon: Trophy,    label: "Retaking the Exam",    desc: "Sat the CSCA before and want to improve my score" },
+  { id: "beginner",     Icon: BookOpen,  label: "Complete Beginner",  desc: "No prior Chinese or CSCA exam experience" },
+  { id: "intermediate", Icon: BarChart3, label: "Some Background",    desc: "Studied physics, chemistry or math at high school" },
+  { id: "advanced",     Icon: Shield,    label: "Actively Preparing", desc: "Studying for a Chinese university application now" },
+  { id: "professional", Icon: Trophy,    label: "Retaking the Exam",  desc: "Sat the CSCA before and want to improve my score" },
 ];
 
 function Step2({ level, setLevel }: { level: string | null; setLevel: (v: string) => void }) {
   return (
-    <div className="space-y-3">
+    <div className="space-y-2.5">
       {levels.map(({ id, Icon, label, desc }) => {
         const selected = level === id;
         return (
-          <button
-            key={id} type="button" onClick={() => setLevel(id)}
-            className={cn(
-              "w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl border text-left transition-all duration-150",
-              selected
-                ? "border-primary bg-primary/5 ring-2 ring-primary/20"
-                : "border-border hover:border-primary/40 hover:bg-zinc-50"
-            )}
-          >
-            <div
-              className={cn(
-                "size-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors",
-                selected ? "bg-primary text-white" : "bg-zinc-100 text-zinc-500"
-              )}
-            >
+          <button key={id} type="button" onClick={() => setLevel(id)}
+            className="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-left transition-all duration-150"
+            style={{
+              background: selected ? "rgba(100,60,200,0.15)" : "rgba(255,255,255,0.04)",
+              border: selected ? `1px solid rgba(100,60,200,0.5)` : "1px solid rgba(255,255,255,0.08)",
+            }}>
+            <div className="size-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors"
+              style={{
+                background: selected ? PURPLE : "rgba(255,255,255,0.08)",
+                color: selected ? "white" : "rgba(255,255,255,0.4)",
+              }}>
               <Icon className="size-4" />
             </div>
-            <div className="min-w-0">
-              <div className="text-sm font-semibold">{label}</div>
-              <div className="text-xs text-muted-foreground truncate">{desc}</div>
+            <div className="min-w-0 flex-1">
+              <div className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.9)" }}>{label}</div>
+              <div className="text-xs truncate" style={{ color: "rgba(255,255,255,0.4)" }}>{desc}</div>
             </div>
             {selected && (
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
+              <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                className="ml-auto flex-shrink-0"
-              >
-                <CircleCheck className="size-5 text-primary" />
+                className="flex-shrink-0">
+                <CircleCheck className="size-5" style={{ color: PURPLE }} />
               </motion.div>
             )}
           </button>
@@ -178,7 +179,7 @@ function Step2({ level, setLevel }: { level: string | null; setLevel: (v: string
   );
 }
 
-/* ── Step 3 — Plan selection ─────────────────────────────── */
+/* ── Step 3 — Plan selection ───────────────────────────── */
 const plans = [
   {
     id: "free", name: "Free", price: "$0", period: "forever",
@@ -197,35 +198,32 @@ function Step3({ plan, setPlan }: { plan: string; setPlan: (v: string) => void }
       {plans.map(({ id, name, price, period, features, popular }) => {
         const selected = plan === id;
         return (
-          <button
-            key={id} type="button" onClick={() => setPlan(id)}
-            className={cn(
-              "w-full text-left rounded-2xl border p-4 transition-all duration-150 relative",
-              selected
-                ? "border-primary bg-primary/5 ring-2 ring-primary/20"
-                : "border-border hover:border-primary/40 hover:bg-zinc-50"
-            )}
-          >
+          <button key={id} type="button" onClick={() => setPlan(id)}
+            className="w-full text-left rounded-2xl p-4 transition-all duration-150 relative"
+            style={{
+              background: selected ? "rgba(100,60,200,0.15)" : "rgba(255,255,255,0.04)",
+              border: selected ? "1px solid rgba(100,60,200,0.5)" : "1px solid rgba(255,255,255,0.08)",
+            }}>
             {popular && (
-              <div className="absolute -top-2.5 left-4 text-[10px] font-bold uppercase tracking-wider text-white bg-primary rounded-full px-2.5 py-0.5">
+              <div className="absolute -top-2.5 left-4 text-[10px] font-bold uppercase tracking-wider text-white rounded-full px-2.5 py-0.5"
+                style={{ background: PURPLE }}>
                 Recommended
               </div>
             )}
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="font-semibold text-sm">{name}</span>
+                  <span className="font-semibold text-sm" style={{ color: "rgba(255,255,255,0.9)" }}>{name}</span>
                 </div>
                 <div className="flex items-baseline gap-0.5 mb-2.5">
-                  <span className="text-2xl font-bold tabular-nums">{price}</span>
-                  <span className="text-xs text-muted-foreground">{period}</span>
+                  <span className="text-2xl font-bold tabular-nums" style={{ color: "rgba(255,255,255,0.95)" }}>{price}</span>
+                  <span className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>{period}</span>
                 </div>
                 <ul className="space-y-1">
                   {features.map((f) => (
-                    <li key={f} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <div className={cn("size-3.5 rounded-full flex items-center justify-center flex-shrink-0",
-                        selected ? "bg-primary" : "bg-zinc-300"
-                      )}>
+                    <li key={f} className="flex items-center gap-1.5 text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
+                      <div className="size-3.5 rounded-full flex items-center justify-center flex-shrink-0"
+                        style={{ background: selected ? PURPLE : "rgba(255,255,255,0.2)" }}>
                         <CircleCheck className="size-2.5 text-white" />
                       </div>
                       {f}
@@ -234,31 +232,28 @@ function Step3({ plan, setPlan }: { plan: string; setPlan: (v: string) => void }
                 </ul>
               </div>
               {selected && (
-                <motion.div
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
+                <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                  className="flex-shrink-0 mt-0.5"
-                >
-                  <CircleCheck className="size-5 text-primary" />
+                  className="flex-shrink-0 mt-0.5">
+                  <CircleCheck className="size-5" style={{ color: PURPLE }} />
                 </motion.div>
               )}
             </div>
           </button>
         );
       })}
-      <p className="text-xs text-center text-muted-foreground pt-1">
+      <p className="text-xs text-center pt-1" style={{ color: "rgba(255,255,255,0.3)" }}>
         Cancel anytime · 7-day money-back guarantee
       </p>
     </div>
   );
 }
 
-/* ── Main register page ──────────────────────────────────── */
+/* ── Main register page ────────────────────────────────── */
 const stepMeta = [
-  { title: "Create free account",   sub: "No credit card required" },
-  { title: "Your CSCA level",       sub: "Help us personalise your experience" },
-  { title: "Choose your plan",      sub: "Start free — upgrade anytime" },
+  { title: "Create free account", sub: "No credit card required" },
+  { title: "Your CSCA level",     sub: "Help us personalise your experience" },
+  { title: "Choose your plan",    sub: "Start free — upgrade anytime" },
 ];
 
 export default function RegisterPage() {
@@ -300,7 +295,6 @@ export default function RegisterPage() {
 
   const handleFinish = async () => {
     setLoading(true);
-    // Supabase auth + plan selection integration point
     setTimeout(() => setLoading(false), 1200);
   };
 
@@ -312,11 +306,26 @@ export default function RegisterPage() {
 
   return (
     <div className="w-full max-w-md">
-      <div className="rounded-3xl border bg-white p-8 shadow-sm">
+      <div
+        className="rounded-3xl p-8"
+        style={{
+          background: "rgba(6,15,26,0.75)",
+          backdropFilter: "blur(24px)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          boxShadow: "0 32px 80px rgba(0,0,0,0.5)",
+        }}
+      >
         {/* Header */}
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-semibold mb-1">{stepMeta[step - 1].title}</h1>
-          <p className="text-sm text-muted-foreground">{stepMeta[step - 1].sub}</p>
+          <h1
+            className="text-3xl font-normal mb-1"
+            style={{ color: "rgba(255,255,255,0.95)", fontFamily: "'Poppins', sans-serif" }}
+          >
+            {stepMeta[step - 1].title}
+          </h1>
+          <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
+            {stepMeta[step - 1].sub}
+          </p>
         </div>
 
         {/* Progress dots */}
@@ -341,7 +350,7 @@ export default function RegisterPage() {
                 email={email} setEmail={setEmail}
                 password={password} setPassword={setPassword}
                 showPw={showPw} setShowPw={setShowPw}
-                onGoogle={() => {/* Supabase Google OAuth */}}
+                onGoogle={() => {}}
               />
             )}
             {step === 2 && <Step2 level={level} setLevel={setLevel} />}
@@ -360,8 +369,13 @@ export default function RegisterPage() {
                   exit={{ opacity: 0, width: 0, scale: 0.85 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20, mass: 0.8 }}
                   onClick={goBack}
-                  className="flex-shrink-0 h-11 flex items-center justify-center rounded-full bg-zinc-100 text-zinc-800 text-sm font-semibold hover:bg-zinc-200 transition-colors active:scale-[0.97] overflow-hidden whitespace-nowrap"
-                  style={{ minWidth: 64 }}
+                  className="flex-shrink-0 h-12 flex items-center justify-center rounded-2xl text-sm font-medium overflow-hidden whitespace-nowrap transition-colors"
+                  style={{
+                    minWidth: 64,
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    color: "rgba(255,255,255,0.7)",
+                  }}
                 >
                   Back
                 </motion.button>
@@ -373,17 +387,18 @@ export default function RegisterPage() {
               disabled={!canProceed || loading}
               animate={{ flex: isExpanded ? 1 : "1 1 auto" }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className={cn(
-                "h-11 flex-1 flex items-center justify-center gap-2 px-5 rounded-full text-sm font-semibold text-white transition-colors",
-                canProceed && !loading
-                  ? "bg-primary hover:bg-primary/90 active:scale-[0.97]"
-                  : "bg-primary/40 cursor-not-allowed"
-              )}
+              className="h-12 flex-1 flex items-center justify-center gap-2 px-5 rounded-2xl text-sm font-semibold text-white transition-opacity"
+              style={{
+                background: PURPLE,
+                opacity: canProceed && !loading ? 1 : 0.4,
+                cursor: canProceed && !loading ? "pointer" : "not-allowed",
+              }}
             >
               {loading ? (
                 <span className="flex items-center gap-2">
                   <motion.span
-                    className="size-4 border-2 border-white/30 border-t-white rounded-full block"
+                    className="size-4 border-2 rounded-full block"
+                    style={{ borderColor: "rgba(255,255,255,0.3)", borderTopColor: "white" }}
                     animate={{ rotate: 360 }}
                     transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
                   />
@@ -409,9 +424,13 @@ export default function RegisterPage() {
         </div>
 
         {/* Footer */}
-        <div className="mt-5 text-center text-sm text-muted-foreground">
+        <div className="mt-5 text-center text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
           Already have an account?{" "}
-          <Link href="/login" className="font-semibold text-foreground hover:underline">
+          <Link href="/login"
+            className="font-medium transition-colors"
+            style={{ color: "rgba(255,255,255,0.75)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "white")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.75)")}>
             Sign in
           </Link>
         </div>

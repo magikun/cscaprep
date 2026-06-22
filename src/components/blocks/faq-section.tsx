@@ -32,8 +32,8 @@ const faqs = [
     a: "Yes, we offer a 7-day money-back guarantee on Pro subscriptions. If you're not satisfied for any reason, contact us within 7 days of your purchase for a full refund.",
   },
   {
-    q: "Does PrepCSCA work on mobile?",
-    a: "Yes. PrepCSCA is fully responsive and works on smartphones, tablets, and desktops. Many students study on mobile between classes and switch to desktop for timed practice tests.",
+    q: "Does Genzy work on mobile?",
+    a: "Yes. Genzy is fully responsive and works on smartphones, tablets, and desktops. Many students study on mobile between classes and switch to desktop for timed practice tests.",
   },
   {
     q: "What if I don't pass?",
@@ -50,18 +50,19 @@ export function FaqSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="faq" ref={ref} className="py-20 bg-white">
+    <section id="faq" ref={ref} className="py-20" style={{ background: "#060f1a" }}>
       <div className="mx-auto max-w-5xl px-6">
         <div className="text-center mb-12">
           <motion.span
-            className="text-xs font-semibold uppercase tracking-widest mb-4 block text-primary"
+            className="text-xs font-semibold uppercase tracking-widest mb-4 block"
+            style={{ color: "rgba(255,255,255,0.35)" }}
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
             FAQ
           </motion.span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal mb-4" style={{ color: "rgba(255,255,255,0.95)", fontFamily: "'Poppins', sans-serif" }}>
             {isInView && (
               <VerticalCutReveal
                 splitBy="words"
@@ -75,12 +76,12 @@ export function FaqSection() {
             )}
           </h2>
           <motion.p
-            className="text-lg text-muted-foreground max-w-xl mx-auto"
+            className="text-lg max-w-xl mx-auto" style={{ color: "rgba(255,255,255,0.45)" }}
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Everything you need to know about the CSCA and how PrepCSCA helps you pass.
+            Everything you need to know about the CSCA and how Genzy helps you pass.
           </motion.p>
         </div>
 
@@ -92,11 +93,11 @@ export function FaqSection() {
         >
           <Accordion className="space-y-1">
             {faqs.slice(0, 4).map((faq, i) => (
-              <AccordionItem key={i} value={`faq-left-${i}`} className="border-b border-dashed">
-                <AccordionTrigger className="text-sm font-medium text-left py-4">
+              <AccordionItem key={i} value={`faq-left-${i}`} className="border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                <AccordionTrigger className="text-sm font-medium text-left py-4" style={{ color: "rgba(255,255,255,0.8)" }}>
                   {faq.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
+                <AccordionContent className="text-sm leading-relaxed pb-4" style={{ color: "rgba(255,255,255,0.45)" }}>
                   {faq.a}
                 </AccordionContent>
               </AccordionItem>
@@ -105,11 +106,11 @@ export function FaqSection() {
 
           <Accordion className="space-y-1">
             {faqs.slice(4).map((faq, i) => (
-              <AccordionItem key={i} value={`faq-right-${i}`} className="border-b border-dashed">
-                <AccordionTrigger className="text-sm font-medium text-left py-4">
+              <AccordionItem key={i} value={`faq-right-${i}`} className="border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                <AccordionTrigger className="text-sm font-medium text-left py-4" style={{ color: "rgba(255,255,255,0.8)" }}>
                   {faq.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
+                <AccordionContent className="text-sm leading-relaxed pb-4" style={{ color: "rgba(255,255,255,0.45)" }}>
                   {faq.a}
                 </AccordionContent>
               </AccordionItem>

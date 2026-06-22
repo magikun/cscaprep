@@ -21,8 +21,8 @@ export const Logo = ({ className }: { className?: string }) => {
           </linearGradient>
         </defs>
       </svg>
-      <span className="font-semibold text-lg tracking-tight">
-        PrepCSCA
+      <span className="font-normal text-lg tracking-tight" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "var(--font-display, 'Instrument Serif', serif)" }}>
+        genzy
       </span>
     </div>
   );

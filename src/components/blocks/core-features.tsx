@@ -12,7 +12,7 @@ export function CoreFeatures() {
       id="features"
       ref={ref}
       style={{
-        background: "#ffffff",
+        background: "#060f1a",
         padding: "80px 20px",
       }}
     >
@@ -31,7 +31,7 @@ export function CoreFeatures() {
               letterSpacing: "1px",
               marginBottom: 16,
               display: "block",
-              color: "oklch(0.62 0.18 275)",
+              color: "rgba(255,255,255,0.35)",
             }}
           >
             Core Features
@@ -41,10 +41,11 @@ export function CoreFeatures() {
         <motion.h2
           style={{
             fontSize: "2.75rem",
-            fontWeight: 500,
-            color: "#0f172a",
+            fontWeight: 400,
+            color: "rgba(255,255,255,0.95)",
             letterSpacing: "-0.02em",
             marginBottom: 12,
+            fontFamily: "'Poppins', sans-serif",
           }}
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -56,7 +57,7 @@ export function CoreFeatures() {
         <motion.p
           style={{
             fontSize: "1.125rem",
-            color: "#64748b",
+            color: "rgba(255,255,255,0.45)",
             lineHeight: 1.5,
             marginBottom: 50,
           }}

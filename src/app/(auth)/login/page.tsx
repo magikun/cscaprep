@@ -16,6 +16,11 @@ function GoogleIcon() {
   );
 }
 
+const inputClass = [
+  "w-full py-3 rounded-2xl text-sm transition-colors",
+  "focus:outline-none focus:ring-1",
+].join(" ");
+
 export default function LoginPage() {
   const [showPw, setShowPw] = useState(false);
   const [email, setEmail] = useState("");
@@ -25,79 +30,112 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Supabase auth integration point
     setTimeout(() => setLoading(false), 1000);
   };
 
   return (
     <div className="w-full max-w-md">
-      <div className="rounded-3xl border bg-white p-8 shadow-sm">
+      <div
+        className="rounded-3xl p-8"
+        style={{
+          background: "rgba(6,15,26,0.75)",
+          backdropFilter: "blur(24px)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          boxShadow: "0 32px 80px rgba(0,0,0,0.5)",
+        }}
+      >
+        {/* Heading */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-semibold mb-2">Welcome back</h1>
-          <p className="text-sm text-muted-foreground">
-            Sign in to your PrepCSCA account
+          <h1
+            className="text-3xl font-normal mb-2"
+            style={{ color: "rgba(255,255,255,0.95)", fontFamily: "'Poppins', sans-serif" }}
+          >
+            Welcome back
+          </h1>
+          <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
+            Sign in to your Genzy account
           </p>
         </div>
 
         {/* Google SSO */}
         <button
           type="button"
-          onClick={() => {/* Supabase Google OAuth */}}
-          className="w-full flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-full border border-input bg-white text-sm font-semibold text-zinc-800 hover:bg-zinc-50 transition-colors active:scale-[0.97] mb-4"
+          onClick={() => {}}
+          className="w-full flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-medium transition-colors active:scale-[0.97]"
+          style={{
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            color: "rgba(255,255,255,0.8)",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}
         >
           <GoogleIcon />
           Continue with Google
         </button>
 
-        <div className="relative flex items-center gap-3 mb-4">
-          <div className="h-px flex-1 bg-border" />
-          <span className="text-xs text-muted-foreground">or</span>
-          <div className="h-px flex-1 bg-border" />
+        <div className="relative flex items-center gap-3 my-5">
+          <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.08)" }} />
+          <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>or</span>
+          <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.08)" }} />
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="text-sm font-medium mb-1.5 block" htmlFor="email">
+            <label className="text-xs font-medium mb-2 block" htmlFor="email"
+              style={{ color: "rgba(255,255,255,0.5)" }}>
               Email
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4"
+                style={{ color: "rgba(255,255,255,0.25)" }} />
               <input
-                id="email"
-                type="email"
-                value={email}
+                id="email" type="email" value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                className="w-full pl-10 pr-4 py-2.5 rounded-full border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                placeholder="you@example.com" required
+                className={inputClass + " pl-10 pr-4"}
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "rgba(255,255,255,0.9)",
+                  caretColor: "white",
+                }}
               />
             </div>
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label className="text-sm font-medium" htmlFor="password">
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-xs font-medium" htmlFor="password"
+                style={{ color: "rgba(255,255,255,0.5)" }}>
                 Password
               </label>
-              <Link href="#" className="text-xs text-muted-foreground hover:text-foreground">
+              <Link href="#" className="text-xs transition-colors"
+                style={{ color: "rgba(255,255,255,0.35)" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}>
                 Forgot password?
               </Link>
             </div>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4"
+                style={{ color: "rgba(255,255,255,0.25)" }} />
               <input
-                id="password"
-                type={showPw ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                className="w-full pl-10 pr-10 py-2.5 rounded-full border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                id="password" type={showPw ? "text" : "password"}
+                value={password} onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••" required
+                className={inputClass + " pl-10 pr-11"}
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "rgba(255,255,255,0.9)",
+                  caretColor: "white",
+                }}
               />
               <button
-                type="button"
-                onClick={() => setShowPw(!showPw)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                type="button" onClick={() => setShowPw(!showPw)}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 transition-colors"
+                style={{ color: "rgba(255,255,255,0.25)" }}
               >
                 {showPw ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
               </button>
@@ -108,12 +146,14 @@ export default function LoginPage() {
             type="submit"
             disabled={loading}
             whileTap={{ scale: 0.97 }}
-            className="w-full h-11 flex items-center justify-center rounded-full bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition-colors disabled:opacity-60 disabled:pointer-events-none"
+            className="w-full h-12 flex items-center justify-center rounded-2xl text-sm font-semibold text-white mt-2 disabled:opacity-60 disabled:pointer-events-none transition-opacity"
+            style={{ background: "oklch(0.62 0.18 275)" }}
           >
             {loading ? (
               <span className="flex items-center gap-2">
                 <motion.span
-                  className="size-4 border-2 border-white/30 border-t-white rounded-full block"
+                  className="size-4 border-2 rounded-full block"
+                  style={{ borderColor: "rgba(255,255,255,0.3)", borderTopColor: "white" }}
                   animate={{ rotate: 360 }}
                   transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
                 />
@@ -125,9 +165,13 @@ export default function LoginPage() {
           </motion.button>
         </form>
 
-        <div className="mt-5 text-center text-sm text-muted-foreground">
+        <div className="mt-6 text-center text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="font-semibold text-foreground hover:underline">
+          <Link href="/register"
+            className="font-medium transition-colors"
+            style={{ color: "rgba(255,255,255,0.75)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "white")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.75)")}>
             Sign up free
           </Link>
         </div>

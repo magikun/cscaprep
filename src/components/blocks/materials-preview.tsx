@@ -62,11 +62,12 @@ export function MaterialsPreview() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="py-20 bg-white">
+    <section ref={ref} className="py-20" style={{ background: "#060f1a" }}>
       <div className="mx-auto max-w-5xl px-6">
         <div className="text-center mb-12">
           <motion.span
-            className="text-xs font-semibold uppercase tracking-widest mb-4 block text-primary"
+            className="text-xs font-semibold uppercase tracking-widest mb-4 block"
+            style={{ color: "rgba(255,255,255,0.35)" }}
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -74,7 +75,8 @@ export function MaterialsPreview() {
             Study Materials
           </motion.span>
           <motion.h2
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4"
+            className="text-3xl md:text-4xl lg:text-5xl font-normal mb-4"
+            style={{ color: "rgba(255,255,255,0.95)", fontFamily: "'Poppins', sans-serif" }}
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -82,7 +84,7 @@ export function MaterialsPreview() {
             Everything to Pass the CSCA
           </motion.h2>
           <motion.p
-            className="text-lg text-muted-foreground max-w-xl mx-auto"
+            className="text-lg max-w-xl mx-auto" style={{ color: "rgba(255,255,255,0.45)" }}
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.15 }}
@@ -141,7 +143,7 @@ export function MaterialsPreview() {
           <Button asChild>
             <Link href="/register">Unlock All Materials — $9/mo</Link>
           </Button>
-          <p className="text-xs text-muted-foreground mt-3">First 2 materials free, forever</p>
+          <p className="text-xs mt-3" style={{ color: "rgba(255,255,255,0.35)" }}>First 2 materials free, forever</p>
         </motion.div>
       </div>
     </section>

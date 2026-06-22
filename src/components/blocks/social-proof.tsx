@@ -15,14 +15,15 @@ export function SocialProof() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="bg-background relative z-10 py-12 border-b border-dashed">
+    <section ref={ref} className="relative z-10 py-12" style={{ background: "#060f1a", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
       <motion.p
-        className="text-center text-sm text-muted-foreground mb-8 mx-auto max-w-5xl px-6"
+        className="text-center text-sm mb-8 mx-auto max-w-5xl px-6"
+        style={{ color: "rgba(255,255,255,0.35)" }}
         initial={{ opacity: 0, y: 8 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.5 }}
       >
-        Students from these countries prepare with PrepCSCA
+        Students from these countries prepare with Genzy
       </motion.p>
 
       <motion.div
@@ -35,7 +36,8 @@ export function SocialProof() {
           {[...companies, ...companies].map((name, i) => (
             <span
               key={i}
-              className="flex-shrink-0 px-7 text-sm font-medium text-foreground/25 tracking-wide whitespace-nowrap select-none"
+              className="flex-shrink-0 px-7 text-sm font-medium tracking-wide whitespace-nowrap select-none"
+              style={{ color: "rgba(255,255,255,0.2)" }}
             >
               {name}
             </span>

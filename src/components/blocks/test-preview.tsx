@@ -54,7 +54,7 @@ export function TestPreview() {
             Try It Now
           </motion.span>
           <motion.h2
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-white mb-4"
+            className="text-3xl md:text-4xl lg:text-5xl font-normal text-white mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}

@@ -63,18 +63,19 @@ export function Testimonials() {
   const rest = testimonials.filter((t) => !t.featured);
 
   return (
-    <section ref={ref} className="py-20 bg-zinc-50/50">
+    <section ref={ref} className="py-20" style={{ background: "#060f1a" }}>
       <div className="mx-auto max-w-5xl px-6">
         <div className="text-center mb-12">
           <motion.span
-            className="text-xs font-semibold uppercase tracking-widest mb-4 block text-primary"
+            className="text-xs font-semibold uppercase tracking-widest mb-4 block"
+            style={{ color: "rgba(255,255,255,0.35)" }}
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
             Student Success
           </motion.span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal mb-4" style={{ color: "rgba(255,255,255,0.95)", fontFamily: "'Poppins', sans-serif" }}>
             {isInView && (
               <VerticalCutReveal
                 splitBy="words"
@@ -88,7 +89,7 @@ export function Testimonials() {
             )}
           </h2>
           <motion.p
-            className="text-lg text-muted-foreground max-w-xl mx-auto"
+            className="text-lg max-w-xl mx-auto" style={{ color: "rgba(255,255,255,0.45)" }}
             initial={{ opacity: 0, y: 16 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, ease: EASE_OUT_EXPO, delay: 0.2 }}
