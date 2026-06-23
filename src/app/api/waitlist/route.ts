@@ -65,9 +65,11 @@ export async function POST(request: Request) {
     <tr>
       <td style="color:#0f172a;font-size:16px;line-height:1.7;">
         <p style="margin:0 0 16px 0;">hey,</p>
-        <p style="margin:0 0 16px 0;">you are now in the waitlist. we will let you know when we launch.</p>
-        <p style="margin:0 0 32px 0;">thx.</p>
-        <p style="margin:0;color:#64748b;font-size:14px;">— Magzhan from genzy</p>
+        <p style="margin:0 0 16px 0;">you're officially on the genzy waitlist — and you're early, which is the best place to be.</p>
+        <p style="margin:0 0 16px 0;">we're building the fastest, clearest way to prep for the CSCA: real-format practice tests, full study materials for math, physics & chemistry, and progress tracking that shows you exactly where you stand.</p>
+        <p style="margin:0 0 32px 0;">you'll be among the first to get in the moment we launch. we'll email you the second it's ready — keep an eye out.</p>
+        <p style="margin:0 0 4px 0;">talk soon,</p>
+        <p style="margin:0;color:#64748b;font-size:14px;">— Magzhan, genzy</p>
       </td>
     </tr>
   </table>
