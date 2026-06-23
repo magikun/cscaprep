@@ -55,13 +55,9 @@ export async function POST(request: Request) {
       // and is far more likely to land in Primary than Promotions.
       text: `hey,
 
-you're officially on the genzy waitlist — and you're early, which is the best place to be.
+you are now in the waitlist. we will let you know when we launch.
 
-we're building the fastest, clearest way to prep for the CSCA: real-format practice tests, full study materials for math, physics & chemistry, and progress tracking that shows you exactly where you stand.
-
-you'll be among the first to get in the moment we launch. we'll email you the second it's ready — keep an eye out.
-
-talk soon,
+thx.
 — Magzhan, genzy`,
       html: `<!DOCTYPE html>
 <html lang="en">
@@ -69,10 +65,8 @@ talk soon,
 <body style="margin:0;padding:0;background:#ffffff;">
   <div style="max-width:480px;margin:0 auto;padding:32px 24px;color:#0f172a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.7;">
     <p style="margin:0 0 16px 0;">hey,</p>
-    <p style="margin:0 0 16px 0;">you're officially on the genzy waitlist — and you're early, which is the best place to be.</p>
-    <p style="margin:0 0 16px 0;">we're building the fastest, clearest way to prep for the CSCA: real-format practice tests, full study materials for math, physics &amp; chemistry, and progress tracking that shows you exactly where you stand.</p>
-    <p style="margin:0 0 24px 0;">you'll be among the first to get in the moment we launch. we'll email you the second it's ready — keep an eye out.</p>
-    <p style="margin:0 0 4px 0;">talk soon,</p>
+    <p style="margin:0 0 16px 0;">you are now in the waitlist. we will let you know when we launch.</p>
+    <p style="margin:0 0 24px 0;">thx.</p>
     <p style="margin:0;">— Magzhan, genzy</p>
   </div>
 </body>
