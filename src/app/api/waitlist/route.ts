@@ -9,7 +9,6 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // ephemeral). We treat persistence as best-effort and rely on the admin
 // notification email below to reliably capture every signup in production.
 const DATA_FILE = path.join(os.tmpdir(), "waitlist-emails.json");
-const ADMIN_EMAIL = "genzy@academixhub.co";
 
 function loadEmails(): Set<string> {
   try {
@@ -87,24 +86,9 @@ talk soon,
     return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
   }
 
-  // Notify the admin so signups are captured even when the filesystem can't
-  // persist them. Best-effort — must not affect the user-facing response.
-  try {
-    await resend.emails.send({
-      from: "genzy waitlist <genzy@academixhub.co>",
-      to: ADMIN_EMAIL,
-      subject: `New waitlist signup: ${normalized}`,
-      html: `<p style="font-family:sans-serif;font-size:15px;color:#0f172a;">New waitlist signup:</p>
-<p style="font-family:sans-serif;font-size:18px;font-weight:600;color:#0f172a;">${normalized}</p>`,
-      headers: {
-        "X-Entity-Ref-ID": crypto.randomUUID(),
-      },
-    });
-  } catch (err) {
-    console.error("Failed to send admin notification:", err);
-  }
-
   // Best-effort local persistence (works in dev, no-ops safely in prod).
+  // In production, the full signup list is visible in the Resend dashboard
+  // (Emails log) — each welcome email's recipient is a signup.
   emails.add(normalized);
   saveEmails(emails);
 
