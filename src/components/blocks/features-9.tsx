@@ -65,7 +65,7 @@ export function Features() {
 }
 
 
-const SubjectCard = ({ Icon, title, description }: { Icon: React.ComponentType<{ className?: string }>; title: string; description: string }) => {
+const SubjectCard = ({ Icon, title, description }: { Icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>; title: string; description: string }) => {
     return (
         <div className="rounded-lg border p-4" style={{ background: "rgba(255,255,255,0.02)", borderColor: "rgba(255,255,255,0.08)" }}>
             <Icon className="size-5" style={{ color: "rgba(255,255,255,0.5)" }} />
