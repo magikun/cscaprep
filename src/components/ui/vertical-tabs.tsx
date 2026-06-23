@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -209,11 +208,10 @@ export function VerticalTabs({
                   className="absolute inset-0 w-full h-full cursor-pointer"
                   onClick={handleNext}
                 >
-                  <Image
+                  <img
                     src={items[activeIndex].image}
                     alt={items[activeIndex].title}
-                    fill
-                    className="object-cover"
+                    className="w-full h-full object-cover block"
                   />
                   <div className="absolute inset-x-0 bottom-0 h-1/3"
                     style={{ background: "linear-gradient(to top, rgba(0,0,0,0.35), transparent)" }}
