@@ -1,5 +1,5 @@
 import { HeroSection } from "@/components/blocks/hero-section";
-import { GenzySection } from "@/components/blocks/genzy-section";
+import { Features } from "@/components/blocks/features-9";
 import { CoreFeatures } from "@/components/blocks/core-features";
 import { HowItWorks } from "@/components/blocks/how-it-works";
 import { WhyUsSection } from "@/components/blocks/why-us-section";
@@ -15,7 +15,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <GenzySection />
+      <Features />
       <CoreFeatures />
       <HowItWorks />
       <WhyUsSection />
