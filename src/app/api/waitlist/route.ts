@@ -50,29 +50,32 @@ export async function POST(request: Request) {
       from: "Magzhan from genzy <genzy@academixhub.co>",
       replyTo: "genzy@academixhub.co",
       to: email,
-      subject: "greeting you are the one of the first who joined genzy",
+      subject: "you're on the genzy waitlist",
+      // Plain-text first: a text alternative + a simple, personal-letter
+      // layout (no banner image, no newsletter table) reads as a 1:1 email
+      // and is far more likely to land in Primary than Promotions.
+      text: `hey,
+
+you're officially on the genzy waitlist — and you're early, which is the best place to be.
+
+we're building the fastest, clearest way to prep for the CSCA: real-format practice tests, full study materials for math, physics & chemistry, and progress tracking that shows you exactly where you stand.
+
+you'll be among the first to get in the moment we launch. we'll email you the second it's ready — keep an eye out.
+
+talk soon,
+— Magzhan, genzy`,
       html: `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#ffffff;font-family:Georgia,serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;margin:0 auto;padding:48px 32px;">
-    <tr>
-      <td align="left" style="padding-bottom:36px;">
-        <img src="https://res.cloudinary.com/dr5iwebjw/image/upload/f_auto,q_auto/ChatGPT_Image_22_июня_2026_г._21_04_47_pq5ndt"
-             alt="genzy" width="120" style="display:block;border:0;" />
-      </td>
-    </tr>
-    <tr>
-      <td style="color:#0f172a;font-size:16px;line-height:1.7;">
-        <p style="margin:0 0 16px 0;">hey,</p>
-        <p style="margin:0 0 16px 0;">you're officially on the genzy waitlist — and you're early, which is the best place to be.</p>
-        <p style="margin:0 0 16px 0;">we're building the fastest, clearest way to prep for the CSCA: real-format practice tests, full study materials for math, physics & chemistry, and progress tracking that shows you exactly where you stand.</p>
-        <p style="margin:0 0 32px 0;">you'll be among the first to get in the moment we launch. we'll email you the second it's ready — keep an eye out.</p>
-        <p style="margin:0 0 4px 0;">talk soon,</p>
-        <p style="margin:0;color:#64748b;font-size:14px;">— Magzhan, genzy</p>
-      </td>
-    </tr>
-  </table>
+<body style="margin:0;padding:0;background:#ffffff;">
+  <div style="max-width:480px;margin:0 auto;padding:32px 24px;color:#0f172a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.7;">
+    <p style="margin:0 0 16px 0;">hey,</p>
+    <p style="margin:0 0 16px 0;">you're officially on the genzy waitlist — and you're early, which is the best place to be.</p>
+    <p style="margin:0 0 16px 0;">we're building the fastest, clearest way to prep for the CSCA: real-format practice tests, full study materials for math, physics &amp; chemistry, and progress tracking that shows you exactly where you stand.</p>
+    <p style="margin:0 0 24px 0;">you'll be among the first to get in the moment we launch. we'll email you the second it's ready — keep an eye out.</p>
+    <p style="margin:0 0 4px 0;">talk soon,</p>
+    <p style="margin:0;">— Magzhan, genzy</p>
+  </div>
 </body>
 </html>`,
       headers: {
