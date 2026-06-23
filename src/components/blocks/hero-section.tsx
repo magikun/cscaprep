@@ -58,6 +58,9 @@ export function HeroSection() {
   };
 
   const handleSubmit = async () => {
+    // Guard against double submission while a request is already in flight
+    // or after the user has successfully joined.
+    if (state === "loading" || state === "success" || state === "duplicate") return;
     if (!email.trim() || !email.includes("@")) return;
     setState("loading");
     try {
@@ -69,10 +72,10 @@ export function HeroSection() {
       const data = await res.json();
       if (data.alreadyJoined) {
         setState("duplicate");
-        setTimeout(() => { setState("idle"); setEmail(""); }, 3200);
+        setEmail("");
       } else if (data.success) {
         setState("success");
-        setTimeout(() => { setState("idle"); setEmail(""); }, 3200);
+        setEmail("");
       } else {
         setState("expanded");
       }

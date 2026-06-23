@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins, Instrument_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ScrollToTop } from "@/components/shared/scroll-to-top";
 
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ScrollToTop />
         {children}
+        <Analytics />
       </body>
     </html>
   );
