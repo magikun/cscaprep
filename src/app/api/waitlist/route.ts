@@ -36,7 +36,7 @@ export async function POST(request: Request) {
   try {
     await resend.emails.send({
       from: "Magzhan from genzy <genzy@academixhub.co>",
-      reply_to: "genzy@academixhub.co",
+      replyTo: "genzy@academixhub.co",
       to: email,
       subject: "greeting you are the one of the first who joined genzy",
       html: `<!DOCTYPE html>
