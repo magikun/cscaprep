@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Genzy",
+  title: "Privacy Policy",
   description: "How Genzy collects, uses, and protects your personal data.",
+  alternates: { canonical: "/privacy-policy" },
 };
 
 const EFFECTIVE_DATE = "June 22, 2026";
