@@ -25,7 +25,7 @@ const ITEMS = [
     id: "03",
     title: "Boost admission competitiveness",
     description:
-      "A high CSCA score signals academic readiness to top Chinese universities. Students who prepare with genzy consistently outperform the average applicant.",
+      "A high CSCA score signals academic readiness to top Chinese universities. Students who prepare with prepify consistently outperform the average applicant.",
     image: "/images/boost-admission.png",
   },
 ];
@@ -34,13 +34,13 @@ const heading = (
   <>
     How{" "}
     <em className="not-italic" style={{ color: "rgba(255,255,255,0.5)" }}>
-      genzy
+      prepify
     </em>
     {" "}can help you
   </>
 );
 
-export function GenzySection() {
+export function PrepifySection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 

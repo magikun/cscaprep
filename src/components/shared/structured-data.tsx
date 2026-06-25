@@ -22,7 +22,7 @@ export function StructuredData() {
         ...(SOCIAL_LINKS.length > 0 ? { sameAs: SOCIAL_LINKS } : {}),
         contactPoint: {
           "@type": "ContactPoint",
-          email: "support@genzy.com",
+          email: "support@prepify.com",
           contactType: "customer support",
         },
       },

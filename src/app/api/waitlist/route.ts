@@ -46,10 +46,10 @@ export async function POST(request: Request) {
   // Sending the welcome email is the real success criterion.
   try {
     await resend.emails.send({
-      from: "Magzhan from genzy <genzy@academixhub.co>",
-      replyTo: "genzy@academixhub.co",
+      from: "Magzhan from prepify <prepify@academixhub.co>",
+      replyTo: "prepify@academixhub.co",
       to: email,
-      subject: "you're on the genzy waitlist",
+      subject: "you're on the prepify waitlist",
       // Plain-text first: a text alternative + a simple, personal-letter
       // layout (no banner image, no newsletter table) reads as a 1:1 email
       // and is far more likely to land in Primary than Promotions.
@@ -58,7 +58,7 @@ export async function POST(request: Request) {
 you are now in the waitlist. we will let you know when we launch.
 
 thx.
-— Magzhan, genzy`,
+— Magzhan, prepify`,
       html: `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -67,7 +67,7 @@ thx.
     <p style="margin:0 0 16px 0;">hey,</p>
     <p style="margin:0 0 16px 0;">you are now in the waitlist. we will let you know when we launch.</p>
     <p style="margin:0 0 24px 0;">thx.</p>
-    <p style="margin:0;">— Magzhan, genzy</p>
+    <p style="margin:0;">— Magzhan, prepify</p>
   </div>
 </body>
 </html>`,

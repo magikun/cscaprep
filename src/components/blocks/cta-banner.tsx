@@ -93,7 +93,7 @@ export function CtaBanner() {
               <span style={{ color: "oklch(0.72 0.18 275)" }}>
                 <Typewriter
                   text={[
-                    "study with genzy",
+                    "study with prepify",
                     "pass the CSCA",
                     "reach China",
                     "succeed",

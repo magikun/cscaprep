@@ -3,12 +3,12 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How Genzy collects, uses, and protects your personal data.",
+  description: "How Prepify collects, uses, and protects your personal data.",
   alternates: { canonical: "/privacy-policy" },
 };
 
 const EFFECTIVE_DATE = "June 22, 2026";
-const CONTACT_EMAIL = "privacy@prepcsca.com";
+const CONTACT_EMAIL = "privacy@prepify.com";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -40,7 +40,7 @@ export default function PrivacyPolicyPage() {
             className="text-xs mb-6 inline-flex items-center gap-1.5 transition-colors"
             style={{ color: "rgba(255,255,255,0.35)" }}
           >
-            ← Back to Genzy
+            ← Back to Prepify
           </Link>
           <h1
             className="text-4xl sm:text-5xl font-normal mt-4"
@@ -57,7 +57,7 @@ export default function PrivacyPolicyPage() {
       {/* Body */}
       <div className="mx-auto max-w-3xl px-6 py-16">
         <p className="text-sm leading-relaxed mb-10" style={{ color: "rgba(255,255,255,0.5)" }}>
-          Genzy (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is committed to protecting your personal information. This Privacy Policy explains what data we collect, why we collect it, how we use it, and your rights regarding your data when you use our platform at prepcsca.com.
+          Prepify (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is committed to protecting your personal information. This Privacy Policy explains what data we collect, why we collect it, how we use it, and your rights regarding your data when you use our platform at prepify.com.
         </p>
 
         <Section title="1. Information We Collect">
@@ -94,7 +94,7 @@ export default function PrivacyPolicyPage() {
         </Section>
 
         <Section title="4. Data Sharing">
-          <p>We share your data only with trusted service providers who help us operate Genzy:</p>
+          <p>We share your data only with trusted service providers who help us operate Prepify:</p>
           <ul className="list-disc pl-5 space-y-1.5">
             <li><strong style={{ color: "rgba(255,255,255,0.75)" }}>Supabase</strong> — database and authentication hosting</li>
             <li><strong style={{ color: "rgba(255,255,255,0.75)" }}>Stripe</strong> — payment processing</li>
@@ -102,7 +102,7 @@ export default function PrivacyPolicyPage() {
             <li><strong style={{ color: "rgba(255,255,255,0.75)" }}>Resend / email provider</strong> — transactional email delivery</li>
           </ul>
           <p>All providers are contractually bound to process data only on our behalf and in accordance with applicable data protection law.</p>
-          <p>We may disclose data if required by law, court order, or to protect the rights and safety of Genzy or others.</p>
+          <p>We may disclose data if required by law, court order, or to protect the rights and safety of Prepify or others.</p>
         </Section>
 
         <Section title="5. Data Retention">
@@ -135,7 +135,7 @@ export default function PrivacyPolicyPage() {
         </Section>
 
         <Section title="8. Children's Privacy">
-          <p>Genzy is not directed at children under 16. We do not knowingly collect personal data from anyone under 16. If you believe a child has provided us data, contact us and we will delete it promptly.</p>
+          <p>Prepify is not directed at children under 16. We do not knowingly collect personal data from anyone under 16. If you believe a child has provided us data, contact us and we will delete it promptly.</p>
         </Section>
 
         <Section title="9. International Transfers">
@@ -148,13 +148,13 @@ export default function PrivacyPolicyPage() {
         </Section>
 
         <Section title="11. Changes to This Policy">
-          <p>We may update this Privacy Policy from time to time. When we make material changes, we will update the effective date at the top and, where appropriate, notify you by email or in-app notice. Continued use of Genzy after changes take effect constitutes acceptance of the revised policy.</p>
+          <p>We may update this Privacy Policy from time to time. When we make material changes, we will update the effective date at the top and, where appropriate, notify you by email or in-app notice. Continued use of Prepify after changes take effect constitutes acceptance of the revised policy.</p>
         </Section>
 
         <Section title="12. Contact Us">
           <p>For any questions, requests, or concerns about this Privacy Policy or your personal data:</p>
           <p>
-            <strong style={{ color: "rgba(255,255,255,0.75)" }}>Genzy</strong><br />
+            <strong style={{ color: "rgba(255,255,255,0.75)" }}>Prepify</strong><br />
             Email:{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
@@ -168,7 +168,7 @@ export default function PrivacyPolicyPage() {
 
         {/* Divider */}
         <div className="mt-16 pt-8 border-t text-xs" style={{ borderColor: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.2)" }}>
-          <p>Last updated: {EFFECTIVE_DATE} · <Link href="/" className="underline underline-offset-2">Return to Genzy</Link></p>
+          <p>Last updated: {EFFECTIVE_DATE} · <Link href="/" className="underline underline-offset-2">Return to Prepify</Link></p>
         </div>
       </div>
     </div>

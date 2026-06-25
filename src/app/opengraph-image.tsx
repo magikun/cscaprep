@@ -29,7 +29,7 @@ export default function OpengraphImage() {
             color: "rgba(255,255,255,0.4)",
           }}
         >
-          Genzy
+          Prepify
         </div>
         <div
           style={{

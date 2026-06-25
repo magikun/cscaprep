@@ -10,8 +10,8 @@ const contactDetails = [
   {
     icon: Mail,
     label: "Email",
-    value: "support@genzy.com",
-    href: "mailto:support@genzy.com",
+    value: "support@prepify.com",
+    href: "mailto:support@prepify.com",
   },
   {
     icon: MapPin,
@@ -146,7 +146,7 @@ export function GetInTouchSection() {
               className="text-xs leading-relaxed px-1"
               style={{ color: "rgba(255,255,255,0.25)" }}
             >
-              Genzy is a CSCA prep platform built for international students
+              Prepify is a CSCA prep platform built for international students
               applying to Chinese universities. We&apos;re a small team and we
               read every message.
             </p>

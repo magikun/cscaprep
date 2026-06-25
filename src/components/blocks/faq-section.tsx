@@ -32,8 +32,8 @@ const faqs = [
     a: "Yes, we offer a 7-day money-back guarantee on Pro subscriptions. If you're not satisfied for any reason, contact us within 7 days of your purchase for a full refund.",
   },
   {
-    q: "Does Genzy work on mobile?",
-    a: "Yes. Genzy is fully responsive and works on smartphones, tablets, and desktops. Many students study on mobile between classes and switch to desktop for timed practice tests.",
+    q: "Does Prepify work on mobile?",
+    a: "Yes. Prepify is fully responsive and works on smartphones, tablets, and desktops. Many students study on mobile between classes and switch to desktop for timed practice tests.",
   },
   {
     q: "What if I don't pass?",
@@ -81,7 +81,7 @@ export function FaqSection() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Everything you need to know about the CSCA and how Genzy helps you pass.
+            Everything you need to know about the CSCA and how Prepify helps you pass.
           </motion.p>
         </div>
 

@@ -13,7 +13,7 @@ const testimonials = [
     name: "Amara O.",
     role: "CSC Scholarship Recipient",
     company: "Nigeria → Tsinghua University",
-    quote: "I passed the CSCA on my first attempt after 3 weeks with PrepCSCA. The practice tests matched the real exam format closely, and the explanations helped me finally understand the Chinese language sections I'd been stuck on for months.",
+    quote: "I passed the CSCA on my first attempt after 3 weeks with Prepify. The practice tests matched the real exam format closely, and the explanations helped me finally understand the Chinese language sections I'd been stuck on for months.",
     rating: 5,
     featured: true,
   },

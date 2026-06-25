@@ -48,8 +48,8 @@ export function HeroSection() {
       setState("expanded");
       setTimeout(() => inputRef.current?.focus(), 320);
     };
-    window.addEventListener("genzy:open-waitlist", handler);
-    return () => window.removeEventListener("genzy:open-waitlist", handler);
+    window.addEventListener("prepify:open-waitlist", handler);
+    return () => window.removeEventListener("prepify:open-waitlist", handler);
   }, []);
 
   const handleExpand = () => {

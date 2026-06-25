@@ -19,7 +19,7 @@ const FEATURES = [
   {
     title: "Cheap",
     icon: PiggyBank,
-    description: "Better to prep with Genzy and save money for further purchases.",
+    description: "Better to prep with Prepify and save money for further purchases.",
   },
   {
     title: "Freedom",
@@ -53,7 +53,7 @@ export function WhyUsSection() {
             className="text-xs font-semibold uppercase tracking-widest mb-4 block"
             style={{ color: "rgba(255,255,255,0.35)" }}
           >
-            Why genzy
+            Why prepify
           </span>
           <h2
             className="text-3xl md:text-4xl lg:text-5xl font-normal mb-4"

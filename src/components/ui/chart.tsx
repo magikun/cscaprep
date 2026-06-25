@@ -69,7 +69,7 @@ ChartContainer.displayName = "Chart"
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
-    ([_, config]) => config.theme || config.color,
+    ([, config]) => config.theme || config.color,
   )
 
   if (!colorConfig.length) {
@@ -102,20 +102,34 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
+type ChartTooltipPayloadItem = {
+  value?: number | string
+  name?: string
+  dataKey?: string | number
+  color?: string
+  payload?: { fill?: string } & Record<string, unknown>
+}
+
 const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
       active?: boolean
-      payload?: any[]
+      payload?: ChartTooltipPayloadItem[]
       hideLabel?: boolean
       hideIndicator?: boolean
       indicator?: "line" | "dot" | "dashed"
       nameKey?: string
       labelKey?: string
-      label?: any
-      labelFormatter?: any
+      label?: React.ReactNode
+      labelFormatter?: (value: React.ReactNode, payload: ChartTooltipPayloadItem[]) => React.ReactNode
       labelClassName?: string
-      formatter?: any
+      formatter?: (
+        value: ChartTooltipPayloadItem["value"],
+        name: ChartTooltipPayloadItem["name"],
+        item: ChartTooltipPayloadItem,
+        index: number,
+        payload: ChartTooltipPayloadItem["payload"],
+      ) => React.ReactNode
       color?: string
     }
 >(
@@ -194,7 +208,7 @@ const ChartTooltipContent = React.forwardRef<
           {payload.map((item, index) => {
             const key = `${nameKey || item.name || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
-            const indicatorColor = color || item.payload.fill || item.color
+            const indicatorColor = color || item.payload?.fill || item.color
 
             return (
               <div
@@ -264,10 +278,16 @@ ChartTooltipContent.displayName = "ChartTooltip"
 
 const ChartLegend = RechartsPrimitive.Legend
 
+type ChartLegendPayloadItem = {
+  value?: string
+  dataKey?: string | number
+  color?: string
+}
+
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
-      payload?: any[]
+      payload?: ChartLegendPayloadItem[]
       verticalAlign?: "top" | "bottom"
       hideIcon?: boolean
       nameKey?: string

@@ -12,9 +12,9 @@ export async function POST(request: Request) {
 
   try {
     await resend.emails.send({
-      from: "Genzy Contact Form <genzy@academixhub.co>",
+      from: "Prepify Contact Form <prepify@academixhub.co>",
       replyTo: email,
-      to: "genzy@academixhub.co",
+      to: "prepify@academixhub.co",
       subject: `New message from ${name}`,
       html: `<!DOCTYPE html>
 <html lang="en">
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
         <p style="margin:0 0 24px 0;font-size:15px;">${email}</p>
         <p style="margin:0 0 6px 0;color:#64748b;font-size:13px;">Message</p>
         <p style="margin:0 0 32px 0;font-size:15px;white-space:pre-wrap;">${message}</p>
-        <p style="margin:0;color:#94a3b8;font-size:13px;">Sent via genzy.com contact form</p>
+        <p style="margin:0;color:#94a3b8;font-size:13px;">Sent via prepify.com contact form</p>
       </td>
     </tr>
   </table>

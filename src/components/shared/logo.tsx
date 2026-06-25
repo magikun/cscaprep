@@ -22,7 +22,7 @@ export const Logo = ({ className }: { className?: string }) => {
         </defs>
       </svg>
       <span className="font-normal text-lg tracking-tight" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "var(--font-display, 'Instrument Serif', serif)" }}>
-        genzy
+        prepify
       </span>
     </div>
   );

@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     "CSC scholarship",
     "Chinese university admission",
     "math physics chemistry prep",
-    "Genzy",
+    "Prepify",
   ],
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME }],
@@ -82,7 +82,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${poppins.variable} ${instrumentSerif.variable} h-full antialiased`} style={{ fontFamily: "var(--font-poppins, 'Poppins', sans-serif)" }}>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <StructuredData />
         <ScrollToTop />
         {children}

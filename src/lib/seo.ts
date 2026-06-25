@@ -3,9 +3,9 @@
  * NEXT_PUBLIC_SITE_URL in the environment (e.g. on Vercel).
  */
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://trygenzy.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://tryprepify.vercel.app";
 
-export const SITE_NAME = "Genzy";
+export const SITE_NAME = "Prepify";
 
 export const SITE_DESCRIPTION =
   "Prepare for the China Scholastic Competency Assessment (CSCA) with real-format practice tests, structured study materials for mathematics, physics, and chemistry, and progress analytics — built for international students applying to Chinese universities.";

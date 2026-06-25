@@ -1,8 +1,8 @@
-# Genzy — Design System
+# Prepify — Design System
 
 ## Product Context
 
-**Platform name: Genzy** (styled as `Genzy®` in Instrument Serif in the navbar)
+**Platform name: Prepify** — written "Prepify" in prose, but styled **lowercase** `prepify®` in Instrument Serif wherever the brand wordmark renders (navbar logo, footer, in-heading mentions)
 
 **CSCA = China Scholastic Competency Assessment** — a standardized test organized by the China Scholarship Council (CSC). It assesses international students' **language proficiency and academic readiness** for undergraduate studies in China.
 
@@ -26,22 +26,46 @@
 - Supabase (auth + database)
 - Stripe (subscriptions)
 - `@number-flow/react` for animated number counters
+- Fonts: **Poppins** + **Instrument Serif** via `next/font/google`
+- Resend for waitlist + contact emails (`/api/waitlist`, `/api/contact`)
+
+---
+
+## Page Composition
+
+Actual marketing home order (`src/app/(marketing)/page.tsx`), top → bottom:
+
+1. `HeroSection` — fullscreen video + expandable waitlist CTA
+2. `Features` (`features-9.tsx`) — "what prepify gives you" bento grid
+3. `CoreFeatures` — 3 gradient cards
+4. `HowItWorks` — 3 numbered steps
+5. `WhyUsSection` — "Why prepify" 4-card grid
+6. `MaterialsPreview` — material cards w/ Pro lock
+7. `StatsSection` — Proven Results stat cards
+8. `PricingSection` — Free vs Pro
+9. `Testimonials` — student success cards
+10. `FaqSection` — accordion
+11. `CtaBanner` — purple final CTA
+12. `GetInTouchSection` — contact form
+
+**Built but NOT currently mounted** in the home page: `SocialProof` (`social-proof.tsx`), `TestPreview`, and `PrepifySection` (`prepify-section.tsx`, the VerticalTabs "How prepify can help you"). Their specs below are kept for when they're re-added; don't assume they render today.
 
 ---
 
 ## Fonts
 
-| Variable | Font | Usage |
-|---|---|---|
-| `--font-display` | **Instrument Serif** (weight 400) | All section h1/h2/h3 headings, navbar logo |
-| `--font-body` | **Inter** (weight 400, 500) | Body text, CTAs, subtext |
-| `--font-bricolage` | Bricolage Grotesque | Legacy — do not use on marketing pages |
-| `--font-figtree` | Figtree | Legacy — do not use on marketing pages |
+Loaded in `src/app/layout.tsx` via `next/font/google`. Only two families are loaded.
+
+| Variable | Font | Weights | Usage |
+|---|---|---|---|
+| `--font-poppins` | **Poppins** | 300/400/500/600/700 | Primary UI + body font. Set globally on `<html>`. CTAs, subtext, and most section headings |
+| `--font-display` | **Instrument Serif** | 400 | Serif display headings — hero H1, navbar logo, editorial section headings |
 
 **Rules:**
-- Section headings: `font-normal` + `fontFamily: "'Instrument Serif', serif"`
-- Body/UI text: `fontFamily: "var(--font-body, Inter, sans-serif)"`
-- Never use `font-semibold` or `font-bold` on Instrument Serif headings — weight 400 only
+- Base/body/UI text is **Poppins** — the `<html>` element already sets `fontFamily: "var(--font-poppins, 'Poppins', sans-serif)"` globally, so you rarely need to repeat it. When a component does set it explicitly, use that exact string.
+- **Serif display headings** (hero H1, "what prepify gives you", How-It-Works step titles, Core Features heading): `font-normal` + `fontFamily: "'Instrument Serif', serif"` — weight 400 only, **never** `font-semibold`/`font-bold`.
+- Some section headings (FAQ, Testimonials, Privacy Policy, Pricing) intentionally use **Poppins** `font-normal` rather than serif. When adding a section, match the heading font of its neighbours.
+- `var(--font-body, …)`, Inter, Bricolage Grotesque, and Figtree are **legacy**. `--font-body` is no longer defined and silently falls back to Inter — do not add new usages; prefer `--font-poppins`. Older components still referencing `var(--font-body, Inter, sans-serif)` are being phased out.
 
 ---
 
@@ -126,18 +150,22 @@ Lives inside HeroSection, rendered above the video z-10
 relative z-10, flex row, justify-between
 px-8 py-6, max-w-7xl mx-auto
 
-Logo: "Genzy®" — text-3xl tracking-tight text-white
-      fontFamily: "'Instrument Serif', serif"
-      ® as <sup className="text-xs">
+Logo: "prepify®" — lowercase (the brand is styled lowercase across the UI),
+      text-3xl tracking-tight text-white
+      fontFamily: "var(--font-display, 'Instrument Serif', serif)"
+      ® as <sup className="text-xs">. Links to "/".
 
 Nav links (hidden md:below): Home · Features · Pricing · FAQ · Get In Touch
-  Active: rgba(255,255,255,1)
+  Each is an in-page anchor (#features / #pricing / #faq / #contact; Home → top).
+  onClick preventDefault + smoothScrollTo(anchor) — does NOT navigate routes.
+  Active (Home): rgba(255,255,255,1)
   Inactive: rgba(255,255,255,0.5) → hover rgba(255,255,255,1)
-  Transition: transition-colors 150ms
-  Inline onMouseEnter/onMouseLeave (no CSS class conflict with dark bg)
+  Transition: transition-colors 150ms, inline onMouseEnter/onMouseLeave
 
-CTA: "Begin Journey"
+CTA: "Begin Journey" — opens the waitlist (onClick={openWaitlist}, dispatches
+  the `prepify:open-waitlist` event). NOT a link to /register.
   liquid-glass rounded-full px-6 py-2.5 text-sm text-white
+  fontFamily: var(--font-poppins, 'Poppins', sans-serif)
   hover:scale-[1.03] transition-transform duration-200
 ```
 
@@ -166,11 +194,18 @@ H1: "Where ambition meets the exam that opens China."
 
 Subtext: mt-8 max-w-2xl text-base sm:text-lg leading-relaxed
   color: rgba(255,255,255,0.55)
-  fontFamily: var(--font-body, Inter, sans-serif)
+  fontFamily: var(--font-poppins, 'Poppins', sans-serif)
 
-CTA: "Start Preparing" — liquid-glass rounded-full px-14 py-5 text-base text-white mt-12
-  hover:scale-[1.03] transition-transform duration-200
-  Link href="/register"
+CTA: Expandable waitlist pill (liquid-glass rounded-full) — NOT a link to /register.
+  Morphs between states via Framer Motion `layout` + AnimatePresence (spring 380/32):
+    idle      → "Join Waitlist" + ArrowRight
+    expanded  → email input + Send button (accent bg oklch(0.62 0.18 275))
+    loading   → spinner inside Send button
+    success   → "You're on the list…" + CheckCircle + Confetti burst
+    duplicate → "You're already on the list!" + Clock
+  Submits to POST /api/waitlist. Also opens on the global `prepify:open-waitlist`
+  CustomEvent — dispatched by openWaitlist() in src/lib/waitlist.ts (navbar + other CTAs).
+  Confetti: 28 pieces, colors [#9B99FE, #2BC8B7, #fff, #c4b5fd, #6ee7b7].
 
 Animations: animate-fade-rise (h1) · animate-fade-rise-delay (p) · animate-fade-rise-delay-2 (cta)
 No overlays, no gradients, no decorative blobs — video provides all depth
@@ -197,12 +232,41 @@ Dashed pill:      border: "1px dashed rgba(255,255,255,0.15)"
 
 ## Social Proof
 
+> Built but NOT currently mounted in the home page (see Page Composition).
+
 ```
 Background: #060f1a, borderBottom: "1px solid rgba(255,255,255,0.06)", py-12
-Label: "Students from these countries prepare with Genzy"
+Label: "Students from these countries prepare with Prepify"
        color: rgba(255,255,255,0.35), text-sm, text-center
 Ticker: country names, color: rgba(255,255,255,0.2), font-medium tracking-wide
 animate-scroll-logos CSS animation, 30s linear infinite
+```
+
+---
+
+## Features — Bento Grid (`features-9.tsx`)
+
+First section after the hero. Heading: "what **prepify** gives you" (`prepify` in an
+`<em className="not-italic">` at `rgba(255,255,255,0.5)`), Instrument Serif font-normal.
+
+```
+Background: #060f1a, px-4 py-16 md:py-32
+Outer grid: mx-auto max-w-5xl border (rgba 0.08), md:grid-cols-2
+
+Cells:
+  • Left col  — 3 SubjectCards stacked (Mathematics / Physics / Chemistry),
+                each: rounded-lg border, bg rgba(255,255,255,0.02), lucide icon + title + desc
+  • Right col — "AI-Powered Help" chat mock (question bubble + accent reply bubble)
+  • Full row  — "94% Pass Rate" (Instrument Serif, text-4xl lg:text-7xl, centered)
+  • Full row  — "Progress Analytics" + Recharts AreaChart (math/physics/chemistry
+                over 7 weeks; colors #9B99FE / #2BC8B7 / #F5A623)
+
+Scroll animation (added — match this when editing):
+  Section: useInView(once, margin -80px)
+  Heading: fade-rise (y 24→0, 0.6s EASE_OUT_EXPO)
+  Grid:    stagger container — variants hidden/show, staggerChildren 0.12, delayChildren 0.1
+  Cells:   cellVariants { hidden: y28/opacity0 → show: 0.65s EASE_OUT_EXPO }
+  Subject cards: nested stagger (0.1) inside the left column, + whileHover y:-3 (0.2s)
 ```
 
 ---
@@ -248,7 +312,30 @@ Step cards (white — do NOT darken):
 
 ---
 
+## Why Prepify (`why-us-section.tsx`)
+
+```
+Background: #060f1a, py-24
+Badge:    "Why prepify" — rgba(255,255,255,0.35), uppercase tracking-widest
+Heading:  "Built differently, for one test." — Instrument Serif font-normal,
+          rendered via <VerticalCutReveal> (spring 260/38), autoStart on inView
+Sub:      rgba(255,255,255,0.45), max-w-[48ch]
+
+Bento grid: grid-cols-1 md:grid-cols-3, auto-rows-[minmax(160px,auto)], gap-5
+  • Left col (row-span-3): white rounded-2xl card, 4 FeatureCards divided by
+    divide-gray-100 — Faast (Rocket) · Cheap (PiggyBank) · Freedom (Wind) · Built-in AI (Brain)
+  • CscaBentoCard — md:col-span-2 row-span-2 (ui/csca-bento-card.tsx)
+  • MagnifiedBento — md:col-span-2 row-span-1 (ui/magnified-bento.tsx)
+
+Reveal: stagger container (hidden/visible, staggerChildren 0.1), each cell
+        spring 100/10 rise. Cards stay white — do NOT darken.
+```
+
+---
+
 ## Test Preview
+
+> Built but NOT currently mounted in the home page (see Page Composition).
 
 ```
 Background: bg-zinc-950 (unchanged, already dark)
@@ -332,12 +419,37 @@ Decorative: grid overlay white/10 + SVG arc top-right
 
 ---
 
+## Get In Touch (`get-in-touch-section.tsx`)
+
+Final section (id="contact"). Contact form wired to `POST /api/contact` (Resend).
+
+```
+Background: #060f1a, py-24
+Badge:   "Contact" · Heading: "Get in touch" (Instrument Serif font-normal)
+Sub:     rgba(255,255,255,0.45), max-w-[44ch]
+
+Layout: grid md:grid-cols-[1fr_1.6fr], gap-8 lg:gap-12, items-start
+  Left  — info card (rounded-2xl, border rgba 0.07, bg rgba 0.02):
+          Email support@prepify.com · "Remote — Global" · "Within 24 hours"
+          each row = size-9 rounded-xl icon tile + uppercase label + value
+  Right — form card (same surface): Name + Email (2-col) + Message textarea
+          Inputs: rounded-xl, bg rgba 0.04, border rgba 0.09 → focus rgba 0.22
+          Submit: rounded-full pill, bg oklch(0.52 0.22 275), Send icon
+          States: idle → loading ("Sending…") → success card (CheckCircle +
+                  "Message sent" + "Send another") | error inline message
+
+Reveal: header fade-rise; left slides x:-20, right slides x:+20 (EASE_OUT_EXPO)
+Form card stays on the dark surface — it is NOT a white card.
+```
+
+---
+
 ## Footer
 
 ```
 Background: #060f1a
 Border top: rgba(255,255,255,0.06)
-Logo: PrepCSCA SVG icon + "Genzy" text rgba(255,255,255,0.85)
+Logo: PrepCSCA SVG icon + "Prepify" text rgba(255,255,255,0.85)
 Category headings: rgba(255,255,255,0.7), text-sm font-semibold
 Links: rgba(255,255,255,0.35), text-sm
 Social links: rgba(255,255,255,0.3), text-xs
@@ -388,7 +500,7 @@ Sections (12 total):
   Links/emails: rgba(255,255,255,0.7), underlined
   Code snippets: bg rgba(255,255,255,0.06), text-xs, rounded
 
-Contact email: privacy@genzy.com
+Contact email: privacy@prepify.com
 ```
 
 ---

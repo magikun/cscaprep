@@ -31,7 +31,7 @@ export function Navbar() {
           className="text-3xl tracking-tight text-white"
           style={{ fontFamily: "var(--font-display, 'Instrument Serif', serif)" }}
         >
-          genzy<sup className="text-xs">®</sup>
+          prepify<sup className="text-xs">®</sup>
         </Link>
 
         {/* Nav links */}

@@ -1,23 +1,50 @@
 'use client'
+import { useRef } from 'react'
+import { motion, useInView, type Variants } from 'framer-motion'
 import { Activity, MessageCircle, Calculator, Atom, Beaker } from 'lucide-react'
 import { Area, AreaChart, CartesianGrid } from 'recharts'
-import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
+import { type ChartConfig, ChartContainer } from '@/components/ui/chart'
+
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const
+
+// Cell reveal: rise + fade, orchestrated by the grid's stagger container.
+const cellVariants: Variants = {
+    hidden: { opacity: 0, y: 28 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE_OUT_EXPO } },
+}
 
 export function Features() {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: "-80px" })
+
     return (
-        <section className="px-4 py-16 md:py-32" style={{ background: "#060f1a" }}>
-            <div className="mx-auto max-w-5xl mb-16">
+        <section ref={ref} className="px-4 py-16 md:py-32" style={{ background: "#060f1a" }}>
+            <motion.div
+                className="mx-auto max-w-5xl mb-16"
+                initial={{ opacity: 0, y: 24 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
+            >
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal" style={{ color: "rgba(255,255,255,0.95)", fontFamily: "'Instrument Serif', serif" }}>
-                    what <em className="not-italic" style={{ color: "rgba(255,255,255,0.5)" }}>genzy</em> gives you
+                    what <em className="not-italic" style={{ color: "rgba(255,255,255,0.5)" }}>prepify</em> gives you
                 </h2>
-            </div>
-            <div className="mx-auto grid max-w-5xl border md:grid-cols-2" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-                <div className="flex flex-col gap-4 p-6 sm:p-12">
+            </motion.div>
+            <motion.div
+                className="mx-auto grid max-w-5xl border md:grid-cols-2"
+                style={{ borderColor: "rgba(255,255,255,0.08)" }}
+                variants={{ show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } } }}
+                initial="hidden"
+                animate={isInView ? "show" : "hidden"}
+            >
+                <motion.div
+                    className="flex flex-col gap-4 p-6 sm:p-12"
+                    variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
+                >
                     <SubjectCard Icon={Calculator} title="Mathematics" description="Algebra, geometry, calculus & problem-solving techniques" />
                     <SubjectCard Icon={Atom} title="Physics" description="Mechanics, thermodynamics, waves & energy concepts" />
                     <SubjectCard Icon={Beaker} title="Chemistry" description="Reactions, periodic table, bonding & molecular structure" />
-                </div>
-                <div className="overflow-hidden border-t p-6 sm:p-12 md:border-0 md:border-l" style={{ background: "transparent", borderColor: "rgba(255,255,255,0.08)" }}>
+                </motion.div>
+                <motion.div variants={cellVariants} className="overflow-hidden border-t p-6 sm:p-12 md:border-0 md:border-l" style={{ background: "transparent", borderColor: "rgba(255,255,255,0.08)" }}>
                     <div className="relative z-10">
                         <span className="flex items-center gap-2 text-sm" style={{ color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-body, Inter, sans-serif)" }}>
                             <MessageCircle className="size-4" />
@@ -42,11 +69,11 @@ export function Features() {
                             <span className="block text-right text-xs" style={{ color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-body, Inter, sans-serif)" }}>Instant</span>
                         </div>
                     </div>
-                </div>
-                <div className="col-span-full border-y p-12" style={{ borderColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.95)" }}>
+                </motion.div>
+                <motion.div variants={cellVariants} className="col-span-full border-y p-12" style={{ borderColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.95)" }}>
                     <p className="text-center text-4xl font-semibold lg:text-7xl" style={{ fontFamily: "'Instrument Serif', serif" }}>94% Pass Rate</p>
-                </div>
-                <div className="col-span-full flex flex-col gap-8 px-6 py-12 md:px-12">
+                </motion.div>
+                <motion.div variants={cellVariants} className="col-span-full flex flex-col gap-8 px-6 py-12 md:px-12">
                     <div>
                         <span className="flex items-center gap-2 text-sm" style={{ color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-body, Inter, sans-serif)" }}>
                             <Activity className="size-4" />
@@ -58,8 +85,8 @@ export function Features() {
                         </p>
                     </div>
                     <MonitoringChart />
-                </div>
-            </div>
+                </motion.div>
+            </motion.div>
         </section>
     )
 }
@@ -67,11 +94,16 @@ export function Features() {
 
 const SubjectCard = ({ Icon, title, description }: { Icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>; title: string; description: string }) => {
     return (
-        <div className="rounded-lg border p-4" style={{ background: "rgba(255,255,255,0.02)", borderColor: "rgba(255,255,255,0.08)" }}>
+        <motion.div
+            variants={cellVariants}
+            whileHover={{ y: -3, transition: { duration: 0.2, ease: "easeOut" } }}
+            className="rounded-lg border p-4"
+            style={{ background: "rgba(255,255,255,0.02)", borderColor: "rgba(255,255,255,0.08)" }}
+        >
             <Icon className="size-5" style={{ color: "rgba(255,255,255,0.5)" }} />
             <h3 className="mt-4 text-sm font-semibold" style={{ color: "rgba(255,255,255,0.95)" }}>{title}</h3>
             <p className="mt-1.5 text-[11px] leading-relaxed" style={{ color: "rgba(255,255,255,0.45)", fontFamily: "var(--font-body, Inter, sans-serif)" }}>{description}</p>
-        </div>
+        </motion.div>
     )
 }
 

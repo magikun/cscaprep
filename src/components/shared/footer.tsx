@@ -63,7 +63,7 @@ export function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 pt-8 text-sm sm:flex-row" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.25)" }}>
-          <p>&copy; {new Date().getFullYear()} Genzy. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Prepify. All rights reserved.</p>
           <p>Made with care for CSCA students</p>
         </div>
       </div>

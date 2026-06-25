@@ -23,7 +23,7 @@ export function SocialProof() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.5 }}
       >
-        Students from these countries prepare with Genzy
+        Students from these countries prepare with Prepify
       </motion.p>
 
       <motion.div
