@@ -246,27 +246,50 @@ animate-scroll-logos CSS animation, 30s linear infinite
 
 ## Features — Bento Grid (`features-9.tsx`)
 
-First section after the hero. Heading: "what **prepify** gives you" (`prepify` in an
-`<em className="not-italic">` at `rgba(255,255,255,0.5)`), Instrument Serif font-normal.
+First section after the hero. Badge "Features" + heading "what **prepify** gives you"
+(`prepify` in an `<em className="not-italic">` at `rgba(255,255,255,0.5)`), Instrument
+Serif font-normal, + subtext line (rgba 0.45, max-w-[52ch]).
 
 ```
 Background: #060f1a, px-4 py-16 md:py-32
 Outer grid: mx-auto max-w-5xl border (rgba 0.08), md:grid-cols-2
 
-Cells:
-  • Left col  — 3 SubjectCards stacked (Mathematics / Physics / Chemistry),
-                each: rounded-lg border, bg rgba(255,255,255,0.02), lucide icon + title + desc
-  • Right col — "AI-Powered Help" chat mock (question bubble + accent reply bubble)
-  • Full row  — "94% Pass Rate" (Instrument Serif, text-4xl lg:text-7xl, centered)
-  • Full row  — "Progress Analytics" + Recharts AreaChart (math/physics/chemistry
-                over 7 weeks; colors #9B99FE / #2BC8B7 / #F5A623)
+Subject accents (shared by cards + chart legend — keep in sync):
+  Mathematics #9B99FE · Physics #2BC8B7 · Chemistry #F5A623
 
-Scroll animation (added — match this when editing):
+Cells:
+  • Left col  — 3 SubjectCards stacked, each: rounded-lg border, bg rgba(255,255,255,0.02),
+                icon in size-9 tinted tile (bg accent+14 hex-alpha, border accent+29),
+                title + desc + accent dot with "N practice questions" (organic counts: 812/746/693)
+  • Right col — "AI-Powered Help" ChatDemo: scripted sequence on own useInView —
+                phase 1 question bubble (0.4s) → phase 2 typing dots in accent bubble
+                (1.1s, 3 pulsing dots, absolute overlay) → phase 3 reply bubble spring in
+                (2.5s, spring 300/28) + "Instant" label
+  • Full row  — "<NumberFlow value={94}>% Pass Rate" (Instrument Serif font-normal,
+                text-4xl lg:text-7xl tabular-nums, own useInView trigger) +
+                muted sub-line "of prepify students pass…"
+  • Full row  — "Progress Analytics" AnalyticsPanel (own useInView, -80px):
+                header row with pulsing accent "Last 7 weeks" live dot ·
+                3 stat chips (accent dot + subject, NumberFlow current % +
+                emerald TrendingUp delta, "since week 1") that act as an
+                interactive legend — hovering a chip spotlights that subject in
+                the chart (others dim to strokeOpacity 0.15 / fill 0.02, chip
+                bg/border tint to accent) · Recharts AreaChart mounts on inView
+                (draws in, staggered animationBegin 0/200/400ms, 1400ms):
+                type="monotone" (NOT "natural" — no overshoot), h-72 md:h-80,
+                organic upward data (endpoints must match stat chips),
+                XAxis week ticks + YAxis [30,100] ticks 40/60/80/100 (rgba 0.3,
+                10px), dashed ReferenceLine y=75 "Target 75" (insideTopLeft),
+                gradient fills 0.4→0, glowing end dots on week 7 (r 3.5 + halo
+                r 8, dark stroke #060f1a), ChartTooltip (white card) with
+                dashed cursor, activeDot r=3
+
+Scroll animation (match this when editing):
   Section: useInView(once, margin -80px)
   Heading: fade-rise (y 24→0, 0.6s EASE_OUT_EXPO)
   Grid:    stagger container — variants hidden/show, staggerChildren 0.12, delayChildren 0.1
   Cells:   cellVariants { hidden: y28/opacity0 → show: 0.65s EASE_OUT_EXPO }
-  Subject cards: nested stagger (0.1) inside the left column, + whileHover y:-3 (0.2s)
+  Subject cards: nested stagger (0.1) + whileHover y:-3 borderColor brighten (0.2s)
 ```
 
 ---
@@ -304,10 +327,20 @@ Layout: flex flex-col items-center (default), md:flex-row (even: md:flex-row-rev
 Visual side: w-full md:flex-1 — MUST be w-full on mobile (not flex-1 only — items-center shrinks it)
 Text side: flex-1
 
-Step cards (white — do NOT darken):
-  Step 01: Signup form card (email/pw/CTA/Google)
-  Step 02: Study session card (domain progress bars)
-  Step 03: PASSED results card (score breakdown, Download Certificate)
+Step cards (white — do NOT darken). Each card has its OWN useInView(once, -60px)
+trigger + whileHover y:-4 lift. Subject rows use the shared accent palette
+(Math #9B99FE · Physics #2BC8B7 · Chemistry #F5A623 — same as Features/chart):
+
+  Step 01 SignupCard — scripted sequence on scroll: email types out char-by-char
+    ("amara@student.com", blinking accent caret, field border glows) → password
+    dots fill one-by-one → CTA presses (scale pulse), turns emerald #10b981 and
+    swaps to "Account created" with a drawn check. Google button has the G logo.
+  Step 02 StudyCard — bars fill (0.9s EASE_OUT_EXPO, stagger 0.35+i*0.15) with
+    NumberFlow percentage count-ups + accent dot per subject; Resume Practice
+    clock icon pulses (scale 1→1.08, 2.4s Infinity).
+  Step 03 ResultsCard — emerald badge springs in (320/20), check draws itself
+    (pathLength), 91/100 + per-subject scores count up via NumberFlow, score
+    rows slide in (x -8→0, stagger 0.5+i*0.12).
 ```
 
 ---
