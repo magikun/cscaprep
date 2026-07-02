@@ -117,6 +117,28 @@ export function FaqSection() {
             ))}
           </Accordion>
         </motion.div>
+
+        <motion.p
+          className="text-center text-sm mt-12"
+          style={{ color: "rgba(255,255,255,0.35)" }}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.45 }}
+        >
+          Still have questions?{" "}
+          <a
+            href="#contact"
+            className="underline underline-offset-4 transition-colors hover:text-white"
+            style={{ color: "rgba(255,255,255,0.6)" }}
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            Get in touch
+          </a>{" "}
+          — we reply within 24 hours.
+        </motion.p>
       </div>
     </section>
   );

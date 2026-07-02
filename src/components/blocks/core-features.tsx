@@ -3,6 +3,9 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
+const cardLift = { y: -6, transition: { duration: 0.25, ease: "easeOut" as const } };
+
 export function CoreFeatures() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
@@ -45,7 +48,7 @@ export function CoreFeatures() {
             color: "rgba(255,255,255,0.95)",
             letterSpacing: "-0.02em",
             marginBottom: 12,
-            fontFamily: "'Poppins', sans-serif",
+            fontFamily: "var(--font-display, 'Instrument Serif', serif)",
           }}
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -84,6 +87,7 @@ export function CoreFeatures() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
+            whileHover={cardLift}
           >
             <div
               style={{
@@ -125,8 +129,8 @@ export function CoreFeatures() {
                 </span>
               </div>
 
-              {/* Pill button */}
-              <div
+              {/* Pill button — floats gently */}
+              <motion.div
                 style={{
                   position: "absolute",
                   top: 180,
@@ -143,18 +147,26 @@ export function CoreFeatures() {
                   alignItems: "center",
                   gap: 6,
                 }}
+                animate={{ y: [0, -4, 0] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
               >
                 <span style={{ color: "#a855f7", fontSize: "1rem" }}>✦</span> Explain this
-              </div>
+              </motion.div>
 
-              {/* Cursor */}
-              <svg
-                style={{ position: "absolute", top: 205, left: 116, width: 24, height: 24, zIndex: 10, filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.2))" }}
-                viewBox="0 0 24 24"
-                fill="#0f172a"
+              {/* Cursor — drifts toward the pill */}
+              <motion.div
+                style={{ position: "absolute", top: 205, left: 116, zIndex: 10 }}
+                animate={{ x: [0, -10, 0], y: [0, -7, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               >
-                <path d="M4 2L20 11L11 13L9 22L4 2Z" stroke="white" strokeWidth="1" />
-              </svg>
+                <svg
+                  style={{ width: 24, height: 24, filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.2))" }}
+                  viewBox="0 0 24 24"
+                  fill="#0f172a"
+                >
+                  <path d="M4 2L20 11L11 13L9 22L4 2Z" stroke="white" strokeWidth="1" />
+                </svg>
+              </motion.div>
 
               <h3
                 style={{
@@ -175,6 +187,7 @@ export function CoreFeatures() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.3 }}
+            whileHover={cardLift}
           >
             <div
               style={{
@@ -208,22 +221,43 @@ export function CoreFeatures() {
                   If f(x) = 3x² − 2x + 1, what is the value of f(2)?
                 </div>
                 {["9", "7", "11", "5"].map((opt, i) => (
-                  <div
+                  <motion.div
                     key={opt}
+                    initial={false}
+                    animate={
+                      i === 0 && isInView
+                        ? { background: "rgba(155,153,254,0.13)", borderColor: "#9B99FE", color: "#6366f1" }
+                        : { background: "#f8fafc", borderColor: "#e2e8f0", color: "#475569" }
+                    }
+                    transition={{ delay: i === 0 ? 1.0 : 0, duration: 0.4 }}
                     style={{
                       padding: "5px 10px",
                       borderRadius: 6,
                       fontSize: "0.7rem",
                       marginBottom: 4,
-                      background: i === 0 ? "linear-gradient(90deg, #9B99FE22, #2BC8B722)" : "#f8fafc",
-                      border: i === 0 ? "1px solid #9B99FE" : "1px solid #e2e8f0",
-                      color: i === 0 ? "#6366f1" : "#475569",
+                      border: "1px solid #e2e8f0",
                       fontWeight: i === 0 ? 600 : 400,
                       textAlign: "left",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
                     }}
                   >
-                    {String.fromCharCode(65 + i)}. {opt}
-                  </div>
+                    <span>{String.fromCharCode(65 + i)}. {opt}</span>
+                    {i === 0 && (
+                      <motion.svg
+                        width="11"
+                        height="9"
+                        viewBox="0 0 14 11"
+                        fill="none"
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{ delay: 1.35, type: "spring", stiffness: 400, damping: 20 }}
+                      >
+                        <path d="M1.5 5.5L5 9L12.5 1.5" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </motion.svg>
+                    )}
+                  </motion.div>
                 ))}
               </div>
 
@@ -246,6 +280,7 @@ export function CoreFeatures() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.4 }}
+            whileHover={cardLift}
           >
             <div
               style={{
@@ -291,15 +326,20 @@ export function CoreFeatures() {
                 {[
                   { domain: "Mathematics", pct: 92, color: "#9B99FE" },
                   { domain: "Physics", pct: 78, color: "#2BC8B7" },
-                  { domain: "Chemistry", pct: 85, color: "#F28482" },
-                ].map((d) => (
+                  { domain: "Chemistry", pct: 85, color: "#F5A623" },
+                ].map((d, i) => (
                   <div key={d.domain} style={{ marginBottom: 8 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.65rem", color: "#475569", marginBottom: 3 }}>
                       <span>{d.domain}</span>
                       <span style={{ fontWeight: 600 }}>{d.pct}%</span>
                     </div>
                     <div style={{ height: 4, borderRadius: 4, background: "#f1f5f9", overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${d.pct}%`, borderRadius: 4, background: d.color }} />
+                      <motion.div
+                        style={{ height: "100%", borderRadius: 4, background: d.color }}
+                        initial={{ width: 0 }}
+                        animate={isInView ? { width: `${d.pct}%` } : {}}
+                        transition={{ duration: 0.9, ease: EASE_OUT_EXPO, delay: 0.7 + i * 0.15 }}
+                      />
                     </div>
                   </div>
                 ))}

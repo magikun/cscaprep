@@ -17,9 +17,9 @@ const footerLinks = {
   ],
   Company: [
     { name: "About", href: "#" },
-    { name: "Privacy Policy", href: "#" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
     { name: "Terms of Service", href: "#" },
-    { name: "Contact", href: "#" },
+    { name: "Contact", href: "#contact" },
   ],
 };
 
@@ -35,7 +35,7 @@ export function Footer() {
             </p>
             <div className="flex gap-4">
               {["Twitter", "LinkedIn", "GitHub"].map((name) => (
-                <Link key={name} href="#" className="text-xs flex items-center gap-1 transition-colors" style={{ color: "rgba(255,255,255,0.3)" }}>
+                <Link key={name} href="#" className="text-xs flex items-center gap-1 transition-colors text-white/30 hover:text-white/60">
                   <ExternalLink className="size-3" /> {name}
                 </Link>
               ))}
@@ -50,8 +50,7 @@ export function Footer() {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-sm transition-colors"
-                      style={{ color: "rgba(255,255,255,0.35)" }}
+                      className="text-sm transition-colors text-white/35 hover:text-white/75"
                     >
                       {link.name}
                     </Link>

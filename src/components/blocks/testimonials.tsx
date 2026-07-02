@@ -104,6 +104,7 @@ export function Testimonials() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.2 }}
+          whileHover={{ y: -4, transition: { duration: 0.25, ease: "easeOut" } }}
         >
           <StarRating rating={featured.rating} />
           <blockquote className="mt-4 text-lg font-medium leading-relaxed text-zinc-800 max-w-[72ch]">
@@ -137,6 +138,7 @@ export function Testimonials() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
+                whileHover={{ y: -4, transition: { duration: 0.25, ease: "easeOut" } }}
               >
                 <StarRating rating={t.rating} />
                 <blockquote className="mt-3 text-sm leading-relaxed text-zinc-700">
@@ -165,6 +167,7 @@ export function Testimonials() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.5 }}
+            whileHover={{ y: -4, transition: { duration: 0.25, ease: "easeOut" } }}
           >
             <StarRating rating={rest[2].rating} />
             <blockquote className="mt-3 text-sm leading-relaxed text-zinc-700 flex-1">

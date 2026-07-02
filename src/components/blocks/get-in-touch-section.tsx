@@ -286,7 +286,7 @@ export function GetInTouchSection() {
                   className="flex items-center gap-2 rounded-full px-7 py-3 text-sm text-white transition-all duration-200 disabled:opacity-60"
                   style={{
                     background: "oklch(0.52 0.22 275)",
-                    fontFamily: "var(--font-body, Inter, sans-serif)",
+                    fontFamily: "var(--font-poppins, 'Poppins', sans-serif)",
                   }}
                   onMouseEnter={e => !status.startsWith("load") && (e.currentTarget.style.opacity = "0.85")}
                   onMouseLeave={e => (e.currentTarget.style.opacity = "1")}

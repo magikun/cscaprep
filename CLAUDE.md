@@ -309,6 +309,14 @@ Card backgrounds (gradient, top → bottom):
   Card 2 (Realistic Tests):      #E5A1F5 → #F8ACA0 → #F4F8F9
   Card 3 (Progress Analytics):   #F9ED96 → #E5A1F5 → #F4F8F9
 All card internals (text, icons, pill buttons) stay white-bg / light-text — do NOT invert
+
+Micro-motion (all gated on section isInView; cards whileHover y:-6):
+  Card 1 — "Explain this" pill floats (y 0→-4, 3.5s loop); cursor drifts
+           toward it (x/y loop, 5s)
+  Card 2 — option A "selects itself" @1.0s (bg/border/color animate to
+           #9B99FE tint) + spring check @1.35s
+  Card 3 — subject bars fill from 0 (0.9s EASE_OUT_EXPO, 0.7+i*0.15);
+           Chemistry uses #F5A623 (shared subject palette)
 ```
 
 ---
@@ -390,16 +398,23 @@ Pro lock overlay: backdrop-blur-[2px] + Lock icon + "Pro Only" gradient badge
 
 ---
 
-## Stats Section
+## Stats Section (`stats-section.tsx` — "Proven Results" dark bento)
 
 ```
 Background: #060f1a, py-20
-Badge/heading/sub: standard dark section pattern
-Heading: "Proven Results" via VerticalCutReveal, Instrument Serif font-normal
+Badge "By the Numbers" · heading "Proven Results" via VerticalCutReveal
+(Poppins font-normal — matches Materials/Pricing neighbours) · sub max-w-[48ch]
 
-Stat cards: 3-col grid, colored backgrounds unchanged:
-  blue-600 (94% pass rate) · emerald-600 (12,847+ students) · fuchsia-700 (2,400+ questions)
-  Cards keep white text, NumberFlow values, colored CTA bars — do NOT change
+3-col grid (min-h-[380px] each), all dark surfaces (NOT white cards):
+  • Card 1 — "Student Achievements" DisplayCards stack (ui/display-cards.tsx),
+    border rgba 0.08
+  • Card 2 — ProgressMetricCard: "Students Prepared" + emerald +32% badge
+    (springs in 320/20 @1.1s) + NumberFlow 12847+ + SVG sparkline that draws
+    itself on inView (pathLength 1.4s EASE_OUT_EXPO, area fades in after) +
+    year labels + "Read student stories" arrow link
+  • Card 3 — NoiseCTACard: feTurbulence grain (opacity 0.18) + purple glow
+    blob (blur 90px, 0.28) + NumberFlow 2400+ questions + accent pill CTA
+    (openWaitlist)
 ```
 
 ---
@@ -441,13 +456,21 @@ Grid: md:grid-cols-2 gap-x-12
 
 ---
 
-## CTA Banner
+## CTA Banner (`cta-banner.tsx` — dark typewriter finale)
 
 ```
-background: oklch(0.52 0.22 275), py-24, overflow-hidden (unchanged purple)
-Heading: Instrument Serif font-normal text-white (updated from font-semibold)
-Layout: md:grid-cols-[2fr_3fr], left "94%" stat, right heading + body + 2 CTAs
-Decorative: grid overlay white/10 + SVG arc top-right
+Background: #060f1a, py-32, overflow-hidden. Decorative layers:
+  feTurbulence grain (opacity 0.13) · purple center glow (700px, blur 160px,
+  opacity 0.14) · 48px grid overlay (rgba 0.025)
+
+Badge "Start your CSCA journey" (rgba 0.3)
+Hero line: Instrument Serif font-normal, clamp(2.6rem, 9vw, 5.5rem) —
+  "you're born to " + <Typewriter> cycling ["study with prepify", "pass the
+  CSCA", "reach China", "succeed", "make history"] in oklch(0.72 0.18 275),
+  cursor "_"
+Sub (max-w-[40ch]) + 2 CTAs: accent pill "Join Waitlist" (openWaitlist) +
+  liquid-glass "See Pricing" (smooth-scrolls #pricing)
+Fine print rgba 0.2
 ```
 
 ---

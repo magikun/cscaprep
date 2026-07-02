@@ -9,7 +9,7 @@ import { Lock, BookMarked, Compass, Zap, Atom, Timer, Calculator } from "lucide-
 const materials = [
   {
     title: "CSCA Subject Guide",
-    description: "Full coverage of all 4 tested subjects with examples",
+    description: "Full coverage of all 3 tested subjects with examples",
     icon: BookMarked,
     readTime: "45 min read",
     isPro: false,
@@ -101,6 +101,7 @@ export function MaterialsPreview() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.08 }}
+              whileHover={mat.isPro ? undefined : { y: -4, transition: { duration: 0.25, ease: "easeOut" } }}
             >
               <div className={`rounded-2xl border p-6 h-full transition-all duration-200 ${mat.isPro ? "bg-zinc-50/50" : "bg-white hover:shadow-md"}`}>
                 {/* Icon */}
@@ -122,7 +123,10 @@ export function MaterialsPreview() {
                   <div className="size-10 rounded-full bg-white shadow-sm flex items-center justify-center">
                     <Lock className="size-4 text-gray-900" />
                   </div>
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-white text-gray-900 shadow-sm">
+                  <span
+                    className="text-xs font-semibold px-2.5 py-0.5 rounded-full text-white shadow-sm"
+                    style={{ background: "linear-gradient(90deg, #9B99FE, #2BC8B7)" }}
+                  >
                     Pro Only
                   </span>
                 </div>
@@ -137,7 +141,7 @@ export function MaterialsPreview() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.7 }}
         >
-          <Button onClick={openWaitlist} className="bg-white text-gray-900 hover:bg-gray-100 border-0 shadow-sm" style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: "1rem" }}>Unlock All Materials — $9/mo</Button>
+          <Button onClick={openWaitlist} className="rounded-full px-6 bg-white text-gray-900 hover:bg-gray-100 border-0 shadow-sm font-medium transition-transform hover:scale-[1.03] active:scale-[0.97]">Unlock All Materials — $9/mo</Button>
           <p className="text-xs mt-3" style={{ color: "rgba(255,255,255,0.35)" }}>First 2 materials free, forever</p>
         </motion.div>
       </div>

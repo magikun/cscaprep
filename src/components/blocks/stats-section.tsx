@@ -38,13 +38,16 @@ function ProgressMetricCard({ isInView }: { isInView: boolean }) {
         >
           Students Prepared
         </span>
-        <span
+        <motion.span
           className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full"
           style={{ background: "rgba(34,197,94,0.15)", color: "rgb(74,222,128)" }}
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ type: "spring", stiffness: 320, damping: 20, delay: 1.1 }}
         >
           <TrendingUp className="size-3" />
           +32%
-        </span>
+        </motion.span>
       </div>
 
       {/* Big number */}
@@ -73,14 +76,23 @@ function ProgressMetricCard({ isInView }: { isInView: boolean }) {
               <stop offset="100%" stopColor="oklch(0.62 0.18 275)" stopOpacity="0" />
             </linearGradient>
           </defs>
-          <path d={area} fill="url(#spark-grad)" />
-          <path
+          <motion.path
+            d={area}
+            fill="url(#spark-grad)"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 1.0 }}
+          />
+          <motion.path
             d={line}
             fill="none"
             stroke="oklch(0.62 0.18 275)"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
+            initial={{ pathLength: 0 }}
+            animate={isInView ? { pathLength: 1 } : {}}
+            transition={{ duration: 1.4, ease: EASE_OUT_EXPO, delay: 0.35 }}
           />
         </svg>
         <div className="flex justify-between text-xs mb-4" style={{ color: "rgba(255,255,255,0.2)" }}>

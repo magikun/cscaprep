@@ -219,7 +219,14 @@ export function PricingSection() {
                   </p>
                   <ul className="space-y-3">
                     {plan.includes.slice(1).map((feature, fi) => (
-                      <li key={fi} className="flex items-start gap-2.5 text-sm">
+                      <motion.li
+                        key={fi}
+                        className="flex items-start gap-2.5 text-sm"
+                        initial={{ opacity: 0, x: -8 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.35, ease: EASE_OUT_EXPO, delay: 0.25 + fi * 0.06 }}
+                      >
                         <Check
                           className={cn(
                             "size-4 mt-0.5 flex-shrink-0",
@@ -229,7 +236,7 @@ export function PricingSection() {
                         <span className={plan.popular ? "text-zinc-300" : "text-zinc-500"}>
                           {feature}
                         </span>
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
                 </div>
